@@ -1,15 +1,16 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
-
 include __DIR__ . '/../config/db.php';
 
 // Only Barangay users
-if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'Barangay') {
-    exit("Access denied");
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Barangay') {
+    header("Location: ../login.php");
+    exit;
 }
 
-$barangay_id = $_SESSION['barangay_id'] ?? 0;
-if (!$barangay_id) exit("Invalid barangay session.");
+// Get the logged-in barangay
+$barangay = $_SESSION['barangay'] ?? '';
+if (!$barangay) exit("Invalid barangay session.");
 
 // Get AJAX params
 $search = trim($_GET['search'] ?? '');
@@ -20,35 +21,33 @@ $limit  = 8;
 $offset = ($page - 1) * $limit;
 
 // Base query
-$sql = "SELECT * FROM households WHERE barangay_id = ?";
-$params = [$barangay_id];
-$types  = "i";
+$sql = "SELECT * FROM beneficiaries WHERE barangay = ?";
+$params = [$barangay];
+$types  = "s"; // string type
 
 // Apply search filter
 if ($search !== '') {
-    $sql .= " AND household_head LIKE ?";
+    $sql .= " AND CONCAT(last_name, ' ', first_name) LIKE ?";
     $params[] = "%$search%";
     $types .= "s";
 }
 
 // Apply sorting
 switch ($sort) {
-    case 'az': $sql .= " ORDER BY household_head ASC"; break;
-    case 'za': $sql .= " ORDER BY household_head DESC"; break;
-    case 'high_priority': $sql .= " ORDER BY FIELD(priority,'High','Medium','Low') ASC"; break;
-    case 'low_priority': $sql .= " ORDER BY FIELD(priority,'Low','Medium','High') ASC"; break;
-    case 'highest_income': $sql .= " ORDER BY income DESC"; break;
-    case 'lowest_income': $sql .= " ORDER BY income ASC"; break;
-    default: $sql .= " ORDER BY id DESC"; break;
+    case 'az': $sql .= " ORDER BY last_name ASC"; break;
+    case 'za': $sql .= " ORDER BY last_name DESC"; break;
+    case 'highest_income': $sql .= " ORDER BY monthly_income DESC"; break;
+    case 'lowest_income': $sql .= " ORDER BY monthly_income ASC"; break;
+    default: $sql .= " ORDER BY beneficiary_id DESC"; break;
 }
 
 // Count total rows for pagination
-$count_sql = "SELECT COUNT(*) FROM households WHERE barangay_id = ?";
-$count_params = [$barangay_id];
-$count_types = "i";
+$count_sql = "SELECT COUNT(*) FROM beneficiaries WHERE barangay = ?";
+$count_params = [$barangay];
+$count_types = "s";
 
 if ($search !== '') {
-    $count_sql .= " AND household_head LIKE ?";
+    $count_sql .= " AND CONCAT(last_name, ' ', first_name) LIKE ?";
     $count_params[] = "%$search%";
     $count_types .= "s";
 }
@@ -79,24 +78,24 @@ $result = $stmt->get_result();
 <thead>
 <tr>
     <th>ID</th>
-    <th>Household Head</th>
+    <th>Last Name</th>
+    <th>First Name</th>
     <th>Income</th>
     <th>Dependents</th>
-    <th>Priority</th>
     <th>Action</th>
 </tr>
 </thead>
 <tbody>
 <?php if ($result->num_rows > 0): ?>
     <?php while ($row = $result->fetch_assoc()): ?>
-    <tr class="household-row" style="cursor:pointer;" onclick="window.location='view_household.php?id=<?= $row['id'] ?>'">
-        <td><?= $row['id'] ?></td>
-        <td><?= htmlspecialchars($row['household_head']) ?></td>
-        <td>₱<?= number_format($row['income'], 2) ?></td>
-        <td><?= $row['family_size'] ?></td>
-        <td><?= $row['priority'] ?></td>
+    <tr class="household-row" style="cursor:pointer;" onclick="window.location='view_household.php?id=<?= $row['beneficiary_id'] ?>'">
+        <td><?= $row['beneficiary_id'] ?></td>
+        <td><?= htmlspecialchars($row['last_name']) ?></td>
+        <td><?= htmlspecialchars($row['first_name']) ?></td>
+        <td>₱<?= number_format($row['monthly_income'], 2) ?></td>
+        <td><?= $row['dependents_count'] ?></td>
         <td onclick="event.stopPropagation();">
-            <a href="edit_household_barangay.php?id=<?= $row['id'] ?>" class="btn btn-warning btn-sm">
+            <a href="edit_household_barangay.php?id=<?= $row['beneficiary_id'] ?>" class="btn btn-warning btn-sm">
                 <i class="bi bi-pencil"></i>
             </a>
         </td>
@@ -104,7 +103,7 @@ $result = $stmt->get_result();
     <?php endwhile; ?>
 <?php else: ?>
 <tr>
-    <td colspan="6" class="text-center">No households found.</td>
+    <td colspan="6" class="text-center">No beneficiaries found in <?= htmlspecialchars($barangay) ?>.</td>
 </tr>
 <?php endif; ?>
 </tbody>

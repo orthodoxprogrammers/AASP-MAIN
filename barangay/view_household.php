@@ -2,47 +2,38 @@
 session_start();
 include __DIR__ . '/../config/db.php';
 
-if(!isset($_SESSION['id']) || $_SESSION['role'] !== 'Barangay'){
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Barangay') {
     header("Location: ../login.php");
     exit;
 }
 
-$user_barangay_id = $_SESSION['barangay_id'] ?? null;
-
-if(!$user_barangay_id){
-    die("Barangay ID not set in session.");
-}
-
-if(!isset($_GET['id'])){
-    header("Location: barangay_households.php");
-    exit;
-}
+$barangay = $_SESSION['barangay'] ?? '';
+if (!$barangay) exit("Invalid barangay session.");
 
 $household_id = intval($_GET['id']);
 
-// Fetch Household safely
-$stmt = $conn->prepare("SELECT h.*, b.barangay_name FROM households h 
-                        JOIN barangays b ON h.barangay_id = b.id 
-                        WHERE h.id = ?");
+// Fetch Household from beneficiaries
+$stmt = $conn->prepare("SELECT * FROM beneficiaries WHERE beneficiary_id = ?");
 $stmt->bind_param("i", $household_id);
 $stmt->execute();
 $householdResult = $stmt->get_result();
 $household = $householdResult->fetch_assoc();
 
-if(!$household){
-    die("Household not found.");
-}
+if (!$household) die("Household not found.");
 
-// Security check: ensure Barangay can only view their own households
-if($household['barangay_id'] != $user_barangay_id){
+// Security check
+if ($household['barangay'] !== $barangay) {
     die("Access denied. This household is not in your barangay.");
 }
 
-// Fetch Members
-$membersStmt = $conn->prepare("SELECT * FROM household_members WHERE household_id = ?");
+// Fetch Members from family_composition
+$membersStmt = $conn->prepare("SELECT * FROM family_composition WHERE beneficiary_id = ?");
 $membersStmt->bind_param("i", $household_id);
 $membersStmt->execute();
 $membersResult = $membersStmt->get_result();
+
+// Count family size
+$family_size = $membersResult->num_rows;
 ?>
 
 <!DOCTYPE html>
@@ -63,11 +54,19 @@ $membersResult = $membersStmt->get_result();
 <div class="container mt-4">
 <h4>Household Details</h4>
 <div class="card shadow p-3 mb-3">
-    <p><strong>Head of Family:</strong> <?php echo htmlspecialchars($household['household_head']); ?></p>
-    <p><strong>Barangay:</strong> <?php echo htmlspecialchars($household['barangay_name']); ?></p>
-    <p><strong>Family Size:</strong> <?php echo $household['family_size']; ?></p>
-    <p><strong>Monthly Income:</strong> ₱<?php echo number_format($household['income'],2); ?></p>
-    <p><strong>Priority:</strong> <?php echo $household['priority']; ?></p>
+    <p><strong>Head of Family:</strong> 
+        <?php 
+            echo htmlspecialchars(
+                trim($household['first_name'] . ' ' . $household['middle_name'] . ' ' . $household['last_name'] . ' ' . $household['ext'])
+            ); 
+        ?>
+    </p>
+    <p><strong>Barangay:</strong> <?php echo htmlspecialchars($household['barangay']); ?></p>
+    <p><strong>Family Size:</strong> <?php echo $family_size; ?></p>
+    <p><strong>Monthly Income:</strong> ₱<?php echo number_format($household['monthly_income'],2); ?></p>
+    <?php if(isset($household['priority'])): ?>
+    <p><strong>Priority:</strong> <?php echo htmlspecialchars($household['priority']); ?></p>
+    <?php endif; ?>
 </div>
 
 <h5>Household Members</h5>
@@ -81,7 +80,6 @@ $membersResult = $membersStmt->get_result();
             <th>Sex</th>
             <th>Occupation</th>
             <th>Income</th>
-            <th>PWD</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -93,22 +91,21 @@ $membersResult = $membersStmt->get_result();
                 <td><?php echo $i++; ?></td>
                 <td><?php echo htmlspecialchars($member['full_name']); ?></td>
                 <td><?php echo $member['age']; ?></td>
-                <td><?php echo $member['sex']; ?></td>
+                <td>-</td> <!-- Sex not in family_composition table -->
                 <td><?php echo htmlspecialchars($member['occupation']); ?></td>
-                <td>₱<?php echo number_format($member['income'],2); ?></td>
-                <td><?php echo $member['pwd'] ? 'Yes' : 'No'; ?></td>
+                <td>₱<?php echo number_format($member['monthly_income'],2); ?></td>
                 <td>
-                    <a href="edit_member.php?id=<?php echo $member['id']; ?>" class="btn btn-warning btn-sm">
+                    <a href="edit_member.php?id=<?php echo $member['family_member_id']; ?>" class="btn btn-warning btn-sm">
                         <i class="bi bi-pencil"></i>
                     </a>
-                    <a href="delete_member.php?id=<?php echo $member['id']; ?>" class="btn btn-danger btn-sm" 
+                    <a href="delete_member.php?id=<?php echo $member['family_member_id']; ?>" class="btn btn-danger btn-sm" 
                        onclick="return confirm('Delete this member?')">
                         <i class="bi bi-trash"></i>
                     </a>
                 </td>
             </tr>
         <?php endwhile; else: ?>
-            <tr><td colspan="8" class="text-center">No members added yet.</td></tr>
+            <tr><td colspan="7" class="text-center">No members added yet.</td></tr>
         <?php endif; ?>
     </tbody>
 </table>

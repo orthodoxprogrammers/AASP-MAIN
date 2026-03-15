@@ -3,12 +3,12 @@ session_start();
 include __DIR__ . '/../config/db.php';
 
 // Only Barangay users can access
-if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'Barangay') {
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Barangay') {
     header("Location: ../login.php");
     exit;
 }
 
-// Get barangay name
+/* Get barangay name
 $barangay_id = $_SESSION['barangay_id'] ?? 0;
 $user_barangay = '';
 
@@ -20,6 +20,9 @@ if ($barangay_id) {
     $stmt->fetch();
     $stmt->close();
 }
+*/
+
+$user_barangay = $_SESSION['barangay'] ?? '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
