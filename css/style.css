@@ -1,0 +1,194 @@
+/* ==============================
+   GLOBAL RESET
+============================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* ==============================
+   BODY
+============================== */
+body {
+    background: #fbfbfb;
+    font-size: 0.85rem;
+}
+
+/* ==============================
+   SIDEBAR
+============================== */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 220px;
+    background: #ffffff;
+    color: rgb(0, 0, 0);
+    border-right: 1px solid rgba(233, 233, 233, 0.436);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.035);
+    font-size: 0.875rem;
+}
+
+.sidebar h4 {
+    padding: 10px 15px;
+    border-bottom: 1px solid #334155;
+}
+
+.sidebar a {
+    display: block;
+    color: rgb(0, 0, 0);
+    padding: 10px 15px;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.sidebar a:hover {
+    background: #e1e1e19a;
+    border-radius: 5px;
+}
+
+.sidebar i {
+    margin-right: 8px;
+}
+
+/* ==============================
+   CONTENT AREA
+============================== */
+.content {
+    margin-left: 220px;
+    padding: 15px;
+    font-size: 0.85rem;
+}
+
+/* ==============================
+   TOPBAR
+============================== */
+.topbar {
+    background: white;
+    padding: 10px 15px;
+    border-radius: 1px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.035);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
+}
+
+/* ==============================
+   CARDS
+============================== */
+.card, .tableCard {
+    border: none;
+    border-radius: 1px;
+    font-size: 0.875rem;
+    padding: 10px !important;
+}
+
+/* ==============================
+   TABLE
+============================== */
+.table {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 0.85rem !important;
+}
+
+.table th, .table td {
+    padding: 0.35rem 0.5rem !important;
+}
+
+/* ==============================
+   BUTTONS
+============================== */
+.btnStyles, .btn {
+    background: #fcfcfc;
+    color: #000000;
+    border: none;
+    font-size: 0.85rem !important;
+    padding: 0.25rem 0.5rem !important;
+    height: 2rem !important;
+}
+
+/* ==============================
+   FORMS / INPUTS
+============================== */
+form label {
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+/* ONLY style text inputs */
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="email"],
+input[type="tel"],
+select,
+textarea,
+input.form-control,
+select.form-control,
+textarea.form-control {
+
+    border-radius: 4px;
+    font-size: 0.85rem;
+    height: 2rem !important;
+    padding: 0.25rem 0.5rem !important;
+}
+
+/* hover effect for text inputs only */
+input[type="text"]:hover,
+input[type="number"]:hover,
+input[type="date"]:hover,
+select:hover,
+textarea:hover {
+    background: #c0c0c020;
+}
+
+/* ==============================
+   CHECKBOX FIX
+============================== */
+input[type="checkbox"],
+input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    padding: 0;
+}
+
+/* ==============================
+   SEARCH + FILTER ROW
+============================== */
+.search-filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.search-filter-row input {
+    flex: 1;
+    height: 2rem !important;
+    font-size: 0.85rem;
+}
+
+.search-filter-row select, .search-filter-row button {
+    flex-shrink: 0;
+    width: 150px;
+    height: 2rem !important;
+    font-size: 0.85rem;
+}
+
+/* ==============================
+   PAGINATION
+============================== */
+.pagination {
+    font-size: 0.85rem !important;
+}
+
+.pagination li a, .pagination li span {
+    padding: 0.25rem 0.5rem !important;
+}

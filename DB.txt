@@ -1,0 +1,2180 @@
+Lets move the RBAC from the old db to the new db.
+
+Old db:
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Mar 12, 2026 at 09:07 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `appointment`
+--
+CREATE DATABASE IF NOT EXISTS `appointment` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `appointment`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `appointment_table`
+--
+
+CREATE TABLE `appointment_table` (
+  `Patients Name` varchar(255) NOT NULL,
+  `Doctors Name` varchar(255) NOT NULL,
+  `Nurse Name` varchar(255) NOT NULL,
+  `Service ID` int(255) NOT NULL,
+  `Appointment Date & Time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+--
+-- Database: `apsystem_db`
+--
+CREATE DATABASE IF NOT EXISTS `apsystem_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `apsystem_db`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `barangays`
+--
+
+CREATE TABLE `barangays` (
+  `id` int(11) NOT NULL,
+  `barangay_name` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `barangays`
+--
+
+INSERT INTO `barangays` (`id`, `barangay_name`, `created_at`) VALUES
+(1, 'Banucal', '2026-02-24 18:48:55'),
+(2, 'Bequi-Walin', '2026-02-24 18:48:55'),
+(3, 'Bugui', '2026-02-24 18:48:55'),
+(4, 'Calungbuyan', '2026-02-24 18:48:55'),
+(5, 'Carcarabasa', '2026-02-24 18:48:55'),
+(6, 'Labut', '2026-02-24 18:48:55'),
+(7, 'Poblacion Norte (Namatting)', '2026-02-24 18:48:55'),
+(8, 'Poblacion Sur (Demang)', '2026-02-24 18:48:55'),
+(9, 'San Vicente (Kamatliwan)', '2026-02-24 18:48:55'),
+(10, 'Suysuyan', '2026-02-24 18:48:55'),
+(11, 'Tay-ac', '2026-02-24 18:48:55');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `households`
+--
+
+CREATE TABLE `households` (
+  `id` int(11) NOT NULL,
+  `household_head` varchar(100) NOT NULL,
+  `family_size` int(11) NOT NULL CHECK (`family_size` > 0),
+  `income` decimal(10,2) NOT NULL CHECK (`income` >= 0),
+  `score` int(11) NOT NULL DEFAULT 0,
+  `priority` enum('Low','Medium','High') NOT NULL DEFAULT 'Low',
+  `disaster_impact` int(1) NOT NULL DEFAULT 0,
+  `income_source` enum('Stable','Unstable','None') NOT NULL DEFAULT 'Stable',
+  `assistance_history` int(1) NOT NULL DEFAULT 0,
+  `barangay_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `households`
+--
+
+INSERT INTO `households` (`id`, `household_head`, `family_size`, `income`, `score`, `priority`, `disaster_impact`, `income_source`, `assistance_history`, `barangay_id`, `created_at`, `updated_at`) VALUES
+(23, 'John Doe', 7, 100000.00, 34, 'Low', 1, 'Stable', 0, 11, '2026-03-06 17:20:52', '2026-03-08 09:39:15'),
+(24, 'Jessie De Guzman', 6, 15000.00, 27, 'Low', 1, 'Stable', 1, 5, '2026-03-06 17:21:54', '2026-03-08 09:39:15'),
+(27, 'Bry Acosta', 5, 10000.00, 0, 'Medium', 0, 'None', 0, 4, '2026-03-06 21:46:34', '2026-03-08 09:39:15'),
+(29, 'Bryan Kenneth Sabuquel', 5, 20000.00, 19, '', 0, '', 1, 4, '2026-03-07 16:24:44', '2026-03-08 13:41:44'),
+(30, 'Franciss Carlo De Guia', 5, 30000.00, 25, '', 1, '', 5, 4, '2026-03-08 11:35:29', '2026-03-08 11:38:37'),
+(31, 'King Gorge', 6, 10000.00, 34, '', 2, '', 0, 4, '2026-03-08 12:34:30', '2026-03-08 13:59:22'),
+(32, 'Juswa King', 5, 50000.00, 0, 'Medium', 0, 'Stable', 0, 4, '2026-03-08 13:59:02', '2026-03-08 13:59:02'),
+(33, 'Francis De Guia', 9, 10000.00, 52, 'Low', 1, '', 1, 4, '2026-03-10 02:05:03', '2026-03-10 02:05:03'),
+(34, 'Francis De Guia', 1, 8900.00, 31, 'Low', 1, '', 1, 4, '2026-03-10 02:06:15', '2026-03-10 02:06:15'),
+(35, 'Francis De Guia', 5, 3000.00, 50, 'Low', 1, '', 0, 4, '2026-03-10 03:55:09', '2026-03-10 03:55:09');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `household_members`
+--
+
+CREATE TABLE `household_members` (
+  `id` int(11) NOT NULL,
+  `household_id` int(11) NOT NULL,
+  `full_name` varchar(255) NOT NULL,
+  `age` int(11) UNSIGNED NOT NULL,
+  `sex` enum('Male','Female') NOT NULL,
+  `occupation` varchar(255) DEFAULT NULL,
+  `income` decimal(12,2) DEFAULT 0.00,
+  `pwd` tinyint(1) DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `household_members`
+--
+
+INSERT INTO `household_members` (`id`, `household_id`, `full_name`, `age`, `sex`, `occupation`, `income`, `pwd`, `created_at`, `updated_at`) VALUES
+(2, 27, 'kile Acosta', 20, 'Male', 'Student', 5000.00, 0, '2026-03-07 14:51:44', '2026-03-07 14:51:44'),
+(3, 24, 'Jane De Guzman', 12, 'Female', 'Student', 0.00, 0, '2026-03-07 16:23:41', '2026-03-07 16:23:41'),
+(5, 30, 'Juswa cortez', 20, 'Male', 'Student', 0.00, 0, '2026-03-08 11:38:37', '2026-03-08 11:38:37'),
+(6, 30, 'Vinico Sumbad', 18, 'Male', 'Student', 0.00, 1, '2026-03-08 11:38:37', '2026-03-08 11:38:37'),
+(11, 31, 'Ulaps Gorge', 30, 'Male', 'Farmer', 0.00, 1, '2026-03-08 13:59:22', '2026-03-08 13:59:22'),
+(12, 32, 'Ange King', 15, 'Female', 'Student', 0.00, 1, '2026-03-08 14:02:36', '2026-03-08 14:02:36'),
+(13, 32, 'Vin King', 29, 'Male', 'Student', 0.00, 0, '2026-03-08 14:02:36', '2026-03-08 14:02:36'),
+(14, 34, 'Bryan', 21, 'Male', 'Worker', 890.00, 0, '2026-03-10 02:06:15', '2026-03-10 02:06:15');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` enum('MSWDO','Barangay') NOT NULL,
+  `barangay_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `password`, `role`, `barangay_id`, `created_at`, `updated_at`) VALUES
+(1, 'mswdo', '$2y$10$c7totMs2z.hF/F8Rgf.bEu8nhPqokTXXL97PeF5fCx.iKMdI.RVBa', 'MSWDO', NULL, '2026-03-08 09:39:15', '2026-03-08 09:39:15'),
+(2, 'banucal', '$2y$10$rNGhud7sMNuffMOJf95teeCQkjXgsR//OP6ftAf7tIjQevXl2M.8S', 'Barangay', 1, '2026-03-08 09:39:15', '2026-03-08 09:39:15'),
+(3, 'bequi_walin', '$2y$10$0/A92rxD3hUUr8m151Ud8.BuU4beZ2nCbXXRvEv5cGbXKLpc2umBe', 'Barangay', 2, '2026-03-08 09:39:15', '2026-03-08 09:39:15'),
+(4, 'bugui', '$2y$10$V1/OjSEHKJYnCjB45Rm15eQcYbb549tYlvav0HAu9VIWwL.NhyIBC', 'Barangay', 3, '2026-03-08 09:39:15', '2026-03-08 09:39:15'),
+(5, 'calungbuyan', '$2y$10$iXk0HRONWuAqWrdDt5xuWeyLgDB42BtK8gq3Npey0qi7pIdfmZvH6', 'Barangay', 4, '2026-03-08 09:39:15', '2026-03-08 09:39:15'),
+(6, 'carcarabasa', '$2y$10$yxiM4WxW2gSuQKOaCWXkeufpzOWM6QWm1LJcO.xW6xebsDB7On.uC', 'Barangay', 5, '2026-03-08 09:39:15', '2026-03-08 09:39:15'),
+(7, 'labut', '$2y$10$s7yJxUFwIEPy5pmx7RPCfuyNSbkAIR18oALa/1PFTPN5B20WKXLVe', 'Barangay', 6, '2026-03-08 09:39:15', '2026-03-08 09:39:15'),
+(8, 'poblacion_norte', '$2y$10$lMAJpmeSbwISSJYqLJFmKulbNmQkp1x7DArBDo3nB64V/hgaTiqt2', 'Barangay', 7, '2026-03-08 09:39:15', '2026-03-08 09:39:15'),
+(9, 'poblacion_sur', '$2y$10$x.e/VVCR2cotiDxRsFK2puaYIjAEiNImrDwPq/zBE8IdQ8kFHjsOC', 'Barangay', 8, '2026-03-08 09:39:15', '2026-03-08 09:39:15'),
+(10, 'san_vicente', '$2y$10$Z9s2b8VbCWpZs3D8LNxRUOGnCLfKkv2yqLoRXVg.zVXzhY0S1AgO.', 'Barangay', 9, '2026-03-08 09:39:15', '2026-03-08 09:39:15'),
+(11, 'suysuyan', '$2y$10$EZex6/RwlR1Mq4dWL8QaGOXPoGMLnxRXFAweSg6abTXwvtmAaayyS', 'Barangay', 10, '2026-03-08 09:39:15', '2026-03-08 09:39:15'),
+(12, 'tay_ac', '$2y$10$TYcxsSvevYfQFGxcm3hSTO7XpioQTVBcpy6xsMPbFmKSIiReAt3t2', 'Barangay', 11, '2026-03-08 09:39:15', '2026-03-08 09:39:15');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `barangays`
+--
+ALTER TABLE `barangays`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `barangay_name` (`barangay_name`);
+
+--
+-- Indexes for table `households`
+--
+ALTER TABLE `households`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `barangay_id` (`barangay_id`);
+
+--
+-- Indexes for table `household_members`
+--
+ALTER TABLE `household_members`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_household_id` (`household_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD KEY `barangay_id` (`barangay_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `barangays`
+--
+ALTER TABLE `barangays`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `households`
+--
+ALTER TABLE `households`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
+-- AUTO_INCREMENT for table `household_members`
+--
+ALTER TABLE `household_members`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `households`
+--
+ALTER TABLE `households`
+  ADD CONSTRAINT `households_ibfk_1` FOREIGN KEY (`barangay_id`) REFERENCES `barangays` (`id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `household_members`
+--
+ALTER TABLE `household_members`
+  ADD CONSTRAINT `fk_household_members` FOREIGN KEY (`household_id`) REFERENCES `households` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`barangay_id`) REFERENCES `barangays` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+--
+-- Database: `ayuda_system`
+--
+CREATE DATABASE IF NOT EXISTS `ayuda_system` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `ayuda_system`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `barangays`
+--
+
+CREATE TABLE `barangays` (
+  `id` int(11) NOT NULL,
+  `barangay_name` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `barangays`
+--
+
+INSERT INTO `barangays` (`id`, `barangay_name`, `created_at`) VALUES
+(1, 'Banucal', '2026-02-25 10:48:55'),
+(2, 'Bequi-Walin', '2026-02-25 10:48:55'),
+(3, 'Bugui', '2026-02-25 10:48:55'),
+(4, 'Calungbuyan', '2026-02-25 10:48:55'),
+(5, 'Carcarabasa', '2026-02-25 10:48:55'),
+(6, 'Labut', '2026-02-25 10:48:55'),
+(7, 'Poblacion Norte (Namatting)', '2026-02-25 10:48:55'),
+(8, 'Poblacion Sur (Demang)', '2026-02-25 10:48:55'),
+(9, 'San Vicente (Kamatliwan)', '2026-02-25 10:48:55'),
+(10, 'Suysuyan', '2026-02-25 10:48:55'),
+(11, 'Tay-ac', '2026-02-25 10:48:55');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `households`
+--
+
+CREATE TABLE `households` (
+  `id` int(11) NOT NULL,
+  `household_head` varchar(100) NOT NULL,
+  `family_size` int(11) NOT NULL,
+  `income` decimal(10,2) NOT NULL,
+  `score` int(11) NOT NULL,
+  `priority` varchar(20) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `disaster_impact` int(11) NOT NULL,
+  `income_source` varchar(50) NOT NULL,
+  `assistance_history` int(11) NOT NULL,
+  `barangay` varchar(100) NOT NULL DEFAULT 'Calungbuyan'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `households`
+--
+
+INSERT INTO `households` (`id`, `household_head`, `family_size`, `income`, `score`, `priority`, `created_at`, `disaster_impact`, `income_source`, `assistance_history`, `barangay`) VALUES
+(23, 'John Doe', 7, 100000.00, 34, 'Low', '2026-03-07 09:20:52', 1, 'Stable', 0, 'Tay-ac'),
+(24, 'Jessie De Guzman', 6, 15000.00, 27, 'Low', '2026-03-07 09:21:54', 1, 'Stable', 5, 'Carcarabasa'),
+(27, 'Bry Acosta', 5, 10000.00, 0, 'Medium', '2026-03-07 13:46:34', 0, '', 0, 'Calungbuyan'),
+(29, 'Bryan Kenneth Sabuquel', 5, 20000.00, 27, 'Low', '2026-03-08 08:24:44', 1, 'Stable', 3, 'Calungbuyan');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `household_members`
+--
+
+CREATE TABLE `household_members` (
+  `id` int(11) NOT NULL,
+  `household_id` int(11) NOT NULL,
+  `full_name` varchar(255) NOT NULL,
+  `age` int(11) NOT NULL,
+  `sex` enum('Male','Female') NOT NULL,
+  `occupation` varchar(255) DEFAULT NULL,
+  `income` decimal(12,2) DEFAULT 0.00,
+  `pwd` tinyint(1) DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `household_members`
+--
+
+INSERT INTO `household_members` (`id`, `household_id`, `full_name`, `age`, `sex`, `occupation`, `income`, `pwd`, `created_at`, `updated_at`) VALUES
+(2, 27, 'kile Acosta', 20, 'Male', 'Student', 5000.00, 0, '2026-03-08 06:51:44', '2026-03-08 06:51:44'),
+(3, 24, 'Jane De Guzman', 12, 'Female', 'Student', 0.00, 0, '2026-03-08 08:23:41', '2026-03-08 08:23:41');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` enum('MSWDO','Barangay') NOT NULL,
+  `barangay` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `password`, `role`, `barangay`) VALUES
+(1, 'mswdo', '$2y$10$c7totMs2z.hF/F8Rgf.bEu8nhPqokTXXL97PeF5fCx.iKMdI.RVBa', 'MSWDO', ''),
+(2, 'banucal', '$2y$10$rNGhud7sMNuffMOJf95teeCQkjXgsR//OP6ftAf7tIjQevXl2M.8S', 'Barangay', 'Banucal'),
+(3, 'bequi_walin', '$2y$10$0/A92rxD3hUUr8m151Ud8.BuU4beZ2nCbXXRvEv5cGbXKLpc2umBe', 'Barangay', 'Bequi-Walin'),
+(4, 'bugui', '$2y$10$V1/OjSEHKJYnCjB45Rm15eQcYbb549tYlvav0HAu9VIWwL.NhyIBC', 'Barangay', 'Bugui'),
+(5, 'calungbuyan', '$2y$10$iXk0HRONWuAqWrdDt5xuWeyLgDB42BtK8gq3Npey0qi7pIdfmZvH6', 'Barangay', 'Calungbuyan'),
+(6, 'carcarabasa', '$2y$10$yxiM4WxW2gSuQKOaCWXkeufpzOWM6QWm1LJcO.xW6xebsDB7On.uC', 'Barangay', 'Carcarabasa'),
+(7, 'labut', '$2y$10$s7yJxUFwIEPy5pmx7RPCfuyNSbkAIR18oALa/1PFTPN5B20WKXLVe', 'Barangay', 'Labut'),
+(8, 'poblacion_norte', '$2y$10$lMAJpmeSbwISSJYqLJFmKulbNmQkp1x7DArBDo3nB64V/hgaTiqt2', 'Barangay', 'Poblacion Norte (Namatting)'),
+(9, 'poblacion_sur', '$2y$10$x.e/VVCR2cotiDxRsFK2puaYIjAEiNImrDwPq/zBE8IdQ8kFHjsOC', 'Barangay', 'Poblacion Sur (Demang)'),
+(10, 'san_vicente', '$2y$10$Z9s2b8VbCWpZs3D8LNxRUOGnCLfKkv2yqLoRXVg.zVXzhY0S1AgO.', 'Barangay', 'San Vicente (Kamatliwan)'),
+(11, 'suysuyan', '$2y$10$EZex6/RwlR1Mq4dWL8QaGOXPoGMLnxRXFAweSg6abTXwvtmAaayyS', 'Barangay', 'Suysuyan'),
+(12, 'tay_ac', '$2y$10$TYcxsSvevYfQFGxcm3hSTO7XpioQTVBcpy6xsMPbFmKSIiReAt3t2', 'Barangay', 'Tay-ac');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `barangays`
+--
+ALTER TABLE `barangays`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `barangay_name` (`barangay_name`);
+
+--
+-- Indexes for table `households`
+--
+ALTER TABLE `households`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_household_head` (`household_head`);
+
+--
+-- Indexes for table `household_members`
+--
+ALTER TABLE `household_members`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_household_id` (`household_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `barangays`
+--
+ALTER TABLE `barangays`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `households`
+--
+ALTER TABLE `households`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
+-- AUTO_INCREMENT for table `household_members`
+--
+ALTER TABLE `household_members`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `household_members`
+--
+ALTER TABLE `household_members`
+  ADD CONSTRAINT `fk_household_members` FOREIGN KEY (`household_id`) REFERENCES `households` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+--
+-- Database: `dswd_system`
+--
+CREATE DATABASE IF NOT EXISTS `dswd_system` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `dswd_system`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` int(11) NOT NULL,
+  `role_name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `role_name`) VALUES
+(1, 'admin'),
+(2, 'dswd'),
+(3, 'barangay');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `barangay_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `password`, `role_id`, `barangay_id`) VALUES
+(1, 'dswd_user', '$2y$10$jRkh7rItn3x6PcjKzNTgdOQYDP4qq4Uk9RzKNt..MfHZ.M46jGuK2', 2, NULL),
+(2, 'admin_user', '$2y$10$jRkh7rItn3x6PcjKzNTgdOQYDP4qq4Uk9RzKNt..MfHZ.M46jGuK2', 1, NULL),
+(3, 'barangay_user', '$2y$10$jRkh7rItn3x6PcjKzNTgdOQYDP4qq4Uk9RzKNt..MfHZ.M46jGuK2', 3, NULL);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD KEY `role_id` (`role_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
+--
+-- Database: `email_verification`
+--
+CREATE DATABASE IF NOT EXISTS `email_verification` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `email_verification`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `email` text NOT NULL,
+  `password` text NOT NULL,
+  `verification_code` text NOT NULL,
+  `email_verified_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `verification_code`, `email_verified_at`) VALUES
+(19, 'Bryan', 'sabuquelbryankent@gmail.com', '$2y$10$CeACzvPu5iHwwH4mzRZSkeJIQ3DsPk5s7T.Gtgeio8ZuhGRjFJai.', '147241', '2025-04-25 19:15:53'),
+(20, 'kent', 'kentsabuquel@gmail.com', '$2y$10$ZKRSLVtUB11FGV/WexQ6LusFceQMVfBaPsAT0jZ9bsWG9I6uBZdU6', '761590', '2025-04-25 19:25:12'),
+(21, 'Bryan', 'sabuquelbryankent@gmail.com', '$2y$10$1rtIbEo6PXWvBnBgXX1dgesaxLX3gxBPtgCe1xQw2bVTEZXGbv6By', '337066', NULL);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+--
+-- Database: `login_email_verification`
+--
+CREATE DATABASE IF NOT EXISTS `login_email_verification` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `login_email_verification`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` int(11) NOT NULL,
+  `role_name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `role_name`) VALUES
+(1, 'admin'),
+(2, 'dswd'),
+(3, 'barangay');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_user`
+--
+
+CREATE TABLE `tbl_user` (
+  `tbl_user_id` int(11) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `contact_number` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `verification_code` int(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_user`
+--
+
+INSERT INTO `tbl_user` (`tbl_user_id`, `first_name`, `last_name`, `contact_number`, `email`, `username`, `password`, `verification_code`) VALUES
+(1, 'Lorem', 'Ipsum', '2147483647', 'lorem.ipsum.sample.email@gail.com', 'admin', 'admin', 965225);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `barangay_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `password`, `role_id`, `barangay_id`) VALUES
+(1, 'dswd_user', '$2y$10$Qs8hy8k0JvW4z3Qh0PX8yOg.3C9B86s76PFGp9r3Z0jFh6B1LnM1y', 2, NULL),
+(2, 'admin_user', '$2y$10$Qs8hy8k0JvW4z3Qh0PX8yOg.3C9B86s76PFGp9r3Z0jFh6B1LnM1y', 1, NULL),
+(3, 'barangay_user', '$2y$10$Qs8hy8k0JvW4z3Qh0PX8yOg.3C9B86s76PFGp9r3Z0jFh6B1LnM1y', 3, NULL);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_user`
+--
+ALTER TABLE `tbl_user`
+  ADD PRIMARY KEY (`tbl_user_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD KEY `role_id` (`role_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tbl_user`
+--
+ALTER TABLE `tbl_user`
+  MODIFY `tbl_user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
+--
+-- Database: `mcoappdev`
+--
+CREATE DATABASE IF NOT EXISTS `mcoappdev` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `mcoappdev`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `adminstaff`
+--
+
+CREATE TABLE `adminstaff` (
+  `as_ID` int(11) NOT NULL,
+  `as_uName` varchar(255) NOT NULL,
+  `as_pWord` varchar(255) NOT NULL,
+  `as_fName` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `adminstaff`
+--
+
+INSERT INTO `adminstaff` (`as_ID`, `as_uName`, `as_pWord`, `as_fName`) VALUES
+(1, 'HotdogSmall1', 'j01w02a03', 'Juswa Cortez'),
+(4, 'Pogiit22', 'B01k02s03', 'Bry Pogi'),
+(7, 'Nikki123', 'FutureDiary', 'Mirai Nikki'),
+(9, '', '', 'paminta'),
+(10, 'wasak', '69pesos', 'paminta'),
+(27, 'paminta', 'wasak', '69pesos'),
+(29, 'juswa', 'wasak', '69pesos');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `adminstaff`
+--
+ALTER TABLE `adminstaff`
+  ADD PRIMARY KEY (`as_ID`),
+  ADD UNIQUE KEY `as_uName` (`as_uName`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `adminstaff`
+--
+ALTER TABLE `adminstaff`
+  MODIFY `as_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+--
+-- Database: `myapp`
+--
+CREATE DATABASE IF NOT EXISTS `myapp` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `myapp`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `appoint`
+--
+
+CREATE TABLE `appoint` (
+  `patients_name` varchar(250) NOT NULL,
+  `doctors_name` varchar(250) NOT NULL,
+  `nurse_name` varchar(250) NOT NULL,
+  `service_id` int(11) NOT NULL,
+  `creat_at` datetime DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `appoint`
+--
+
+INSERT INTO `appoint` (`patients_name`, `doctors_name`, `nurse_name`, `service_id`, `creat_at`) VALUES
+('Aumalyn Cubas', 'Unknown 02', 'Unknown 02', 2, '2024-06-13 07:27:00'),
+('Nicole Bañez', 'Unknown 03', 'Unknown 03', 3, '2024-06-13 07:28:00'),
+('James Garabiles', 'Unknown 04', 'Unknown 04', 4, '2024-06-13 07:29:00'),
+('Kenlei Quitasol', 'Unknown 05', 'Unknown 05', 5, '2024-06-13 07:30:00'),
+('John Paul Diano', 'Unknown 06', 'Unknown 06', 6, '2024-06-13 07:31:00'),
+('Marjolyn Sodsod', 'Unknown 07', 'Unknown 07', 7, '2024-06-13 07:32:00'),
+('Ruth Ann Gaygay-ed', 'Unknown 08', 'Unknown 08', 8, '2024-06-13 07:32:00'),
+('James Garabiles', 'Bryan Sabuquel', 'Margauxxen ', 12, '2024-06-18 02:09:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `doctor`
+--
+
+CREATE TABLE `doctor` (
+  `id` int(11) NOT NULL,
+  `full_name` varchar(250) NOT NULL,
+  `special` varchar(250) NOT NULL,
+  `address` varchar(250) NOT NULL,
+  `phone_num` varchar(250) DEFAULT NULL,
+  `fee` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `doctor`
+--
+
+INSERT INTO `doctor` (`id`, `full_name`, `special`, `address`, `phone_num`, `fee`) VALUES
+(1, 'Bryan Sabuquel', 'Physician', 'Lid-lidda, Ilocos Sur', '0998 765 4321', 1000),
+(2, 'Elijah', 'Physician', 'Alilem, Ilocos Sur', '0945 962 3154', 1000),
+(4, 'Alexix', 'Neurosurgeon', 'Alilem, Ilocos Sur', '09956586231', 1000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `nurses`
+--
+
+CREATE TABLE `nurses` (
+  `id` int(11) NOT NULL,
+  `full_name` varchar(250) NOT NULL,
+  `special` varchar(250) NOT NULL,
+  `address` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `nurses`
+--
+
+INSERT INTO `nurses` (`id`, `full_name`, `special`, `address`) VALUES
+(1, 'Marjolyn Sossod', 'Neurosurgeons', 'Sta. Lucia, Ilocos Sur');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `patient`
+--
+
+CREATE TABLE `patient` (
+  `id` int(11) NOT NULL,
+  `full_name` varchar(250) NOT NULL,
+  `birthday` varchar(250) NOT NULL,
+  `address` varchar(250) NOT NULL,
+  `contact_num` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `patient`
+--
+
+INSERT INTO `patient` (`id`, `full_name`, `birthday`, `address`, `contact_num`) VALUES
+(1, 'Kuraizawa Kei', '2001/04/24', 'Alilem, Ilocos Sur', '0994 644 2919'),
+(5, 'Aumagirl', '2003/01/30', 'Alilem, Ilocos Sur', '09856574321');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` int(11) NOT NULL,
+  `title` varchar(250) NOT NULL,
+  `desc1` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `title`, `desc1`) VALUES
+(1, 'Administrators', 'Manages the day-to-day operations of the hospital including budgeting and more.');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `services`
+--
+
+CREATE TABLE `services` (
+  `id` int(11) NOT NULL,
+  `title` varchar(250) NOT NULL,
+  `desc1` varchar(250) NOT NULL,
+  `fee` int(11) DEFAULT NULL,
+  `hour` time DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `services`
+--
+
+INSERT INTO `services` (`id`, `title`, `desc1`, `fee`, `hour`) VALUES
+(1, 'Administrator', 'Manages the day-to-day operations of the hospital including budgeting and more.', 500, '10:19:44');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `staff`
+--
+
+CREATE TABLE `staff` (
+  `id` int(11) NOT NULL,
+  `username` varchar(250) NOT NULL,
+  `full_name` varchar(250) NOT NULL,
+  `phone_number` varchar(250) DEFAULT NULL,
+  `address` varchar(250) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `staff`
+--
+
+INSERT INTO `staff` (`id`, `username`, `full_name`, `phone_number`, `address`) VALUES
+(3, 'admin01', 'Ayanokoji Kiyotaka', '0963 377 9096', 'Candon, Ilocos Sur');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `appoint`
+--
+ALTER TABLE `appoint`
+  ADD PRIMARY KEY (`service_id`);
+
+--
+-- Indexes for table `doctor`
+--
+ALTER TABLE `doctor`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `nurses`
+--
+ALTER TABLE `nurses`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `patient`
+--
+ALTER TABLE `patient`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `services`
+--
+ALTER TABLE `services`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `staff`
+--
+ALTER TABLE `staff`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `appoint`
+--
+ALTER TABLE `appoint`
+  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12346;
+
+--
+-- AUTO_INCREMENT for table `doctor`
+--
+ALTER TABLE `doctor`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `nurses`
+--
+ALTER TABLE `nurses`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `patient`
+--
+ALTER TABLE `patient`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `services`
+--
+ALTER TABLE `services`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `staff`
+--
+ALTER TABLE `staff`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- Database: `myappointment`
+--
+CREATE DATABASE IF NOT EXISTS `myappointment` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `myappointment`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `clients`
+--
+
+CREATE TABLE `clients` (
+  `Patients` varchar(250) NOT NULL,
+  `Doctors` varchar(250) NOT NULL,
+  `Nurse` varchar(250) NOT NULL,
+  `Service` varchar(250) NOT NULL,
+  `Appointment` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `clients`
+--
+ALTER TABLE `clients`
+  ADD UNIQUE KEY `Appointment` (`Appointment`);
+--
+-- Database: `mypass`
+--
+CREATE DATABASE IF NOT EXISTS `mypass` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `mypass`;
+--
+-- Database: `phpmyadmin`
+--
+CREATE DATABASE IF NOT EXISTS `phpmyadmin` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+USE `phpmyadmin`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__bookmark`
+--
+
+CREATE TABLE `pma__bookmark` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `dbase` varchar(255) NOT NULL DEFAULT '',
+  `user` varchar(255) NOT NULL DEFAULT '',
+  `label` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `query` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Bookmarks';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__central_columns`
+--
+
+CREATE TABLE `pma__central_columns` (
+  `db_name` varchar(64) NOT NULL,
+  `col_name` varchar(64) NOT NULL,
+  `col_type` varchar(64) NOT NULL,
+  `col_length` text DEFAULT NULL,
+  `col_collation` varchar(64) NOT NULL,
+  `col_isNull` tinyint(1) NOT NULL,
+  `col_extra` varchar(255) DEFAULT '',
+  `col_default` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Central list of columns';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__column_info`
+--
+
+CREATE TABLE `pma__column_info` (
+  `id` int(5) UNSIGNED NOT NULL,
+  `db_name` varchar(64) NOT NULL DEFAULT '',
+  `table_name` varchar(64) NOT NULL DEFAULT '',
+  `column_name` varchar(64) NOT NULL DEFAULT '',
+  `comment` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `mimetype` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `transformation` varchar(255) NOT NULL DEFAULT '',
+  `transformation_options` varchar(255) NOT NULL DEFAULT '',
+  `input_transformation` varchar(255) NOT NULL DEFAULT '',
+  `input_transformation_options` varchar(255) NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Column information for phpMyAdmin';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__designer_settings`
+--
+
+CREATE TABLE `pma__designer_settings` (
+  `username` varchar(64) NOT NULL,
+  `settings_data` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Settings related to Designer';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__export_templates`
+--
+
+CREATE TABLE `pma__export_templates` (
+  `id` int(5) UNSIGNED NOT NULL,
+  `username` varchar(64) NOT NULL,
+  `export_type` varchar(10) NOT NULL,
+  `template_name` varchar(64) NOT NULL,
+  `template_data` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Saved export templates';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__favorite`
+--
+
+CREATE TABLE `pma__favorite` (
+  `username` varchar(64) NOT NULL,
+  `tables` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Favorite tables';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__history`
+--
+
+CREATE TABLE `pma__history` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `username` varchar(64) NOT NULL DEFAULT '',
+  `db` varchar(64) NOT NULL DEFAULT '',
+  `table` varchar(64) NOT NULL DEFAULT '',
+  `timevalue` timestamp NOT NULL DEFAULT current_timestamp(),
+  `sqlquery` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='SQL history for phpMyAdmin';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__navigationhiding`
+--
+
+CREATE TABLE `pma__navigationhiding` (
+  `username` varchar(64) NOT NULL,
+  `item_name` varchar(64) NOT NULL,
+  `item_type` varchar(64) NOT NULL,
+  `db_name` varchar(64) NOT NULL,
+  `table_name` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Hidden items of navigation tree';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__pdf_pages`
+--
+
+CREATE TABLE `pma__pdf_pages` (
+  `db_name` varchar(64) NOT NULL DEFAULT '',
+  `page_nr` int(10) UNSIGNED NOT NULL,
+  `page_descr` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='PDF relation pages for phpMyAdmin';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__recent`
+--
+
+CREATE TABLE `pma__recent` (
+  `username` varchar(64) NOT NULL,
+  `tables` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Recently accessed tables';
+
+--
+-- Dumping data for table `pma__recent`
+--
+
+INSERT INTO `pma__recent` (`username`, `tables`) VALUES
+('root', '[{\"db\":\"myappointment\",\"table\":\"clients\"},{\"db\":\"mcoappdev\",\"table\":\"adminstaff\"},{\"db\":\"mysql\",\"table\":\"column_stats\"},{\"db\":\"mcoappdev\",\"table\":\"adminStaff\"}]');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__relation`
+--
+
+CREATE TABLE `pma__relation` (
+  `master_db` varchar(64) NOT NULL DEFAULT '',
+  `master_table` varchar(64) NOT NULL DEFAULT '',
+  `master_field` varchar(64) NOT NULL DEFAULT '',
+  `foreign_db` varchar(64) NOT NULL DEFAULT '',
+  `foreign_table` varchar(64) NOT NULL DEFAULT '',
+  `foreign_field` varchar(64) NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Relation table';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__savedsearches`
+--
+
+CREATE TABLE `pma__savedsearches` (
+  `id` int(5) UNSIGNED NOT NULL,
+  `username` varchar(64) NOT NULL DEFAULT '',
+  `db_name` varchar(64) NOT NULL DEFAULT '',
+  `search_name` varchar(64) NOT NULL DEFAULT '',
+  `search_data` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Saved searches';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__table_coords`
+--
+
+CREATE TABLE `pma__table_coords` (
+  `db_name` varchar(64) NOT NULL DEFAULT '',
+  `table_name` varchar(64) NOT NULL DEFAULT '',
+  `pdf_page_number` int(11) NOT NULL DEFAULT 0,
+  `x` float UNSIGNED NOT NULL DEFAULT 0,
+  `y` float UNSIGNED NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Table coordinates for phpMyAdmin PDF output';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__table_info`
+--
+
+CREATE TABLE `pma__table_info` (
+  `db_name` varchar(64) NOT NULL DEFAULT '',
+  `table_name` varchar(64) NOT NULL DEFAULT '',
+  `display_field` varchar(64) NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Table information for phpMyAdmin';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__table_uiprefs`
+--
+
+CREATE TABLE `pma__table_uiprefs` (
+  `username` varchar(64) NOT NULL,
+  `db_name` varchar(64) NOT NULL,
+  `table_name` varchar(64) NOT NULL,
+  `prefs` text NOT NULL,
+  `last_update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Tables'' UI preferences';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__tracking`
+--
+
+CREATE TABLE `pma__tracking` (
+  `db_name` varchar(64) NOT NULL,
+  `table_name` varchar(64) NOT NULL,
+  `version` int(10) UNSIGNED NOT NULL,
+  `date_created` datetime NOT NULL,
+  `date_updated` datetime NOT NULL,
+  `schema_snapshot` text NOT NULL,
+  `schema_sql` text DEFAULT NULL,
+  `data_sql` longtext DEFAULT NULL,
+  `tracking` set('UPDATE','REPLACE','INSERT','DELETE','TRUNCATE','CREATE DATABASE','ALTER DATABASE','DROP DATABASE','CREATE TABLE','ALTER TABLE','RENAME TABLE','DROP TABLE','CREATE INDEX','DROP INDEX','CREATE VIEW','ALTER VIEW','DROP VIEW') DEFAULT NULL,
+  `tracking_active` int(1) UNSIGNED NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Database changes tracking for phpMyAdmin';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__userconfig`
+--
+
+CREATE TABLE `pma__userconfig` (
+  `username` varchar(64) NOT NULL,
+  `timevalue` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `config_data` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='User preferences storage for phpMyAdmin';
+
+--
+-- Dumping data for table `pma__userconfig`
+--
+
+INSERT INTO `pma__userconfig` (`username`, `timevalue`, `config_data`) VALUES
+('root', '2024-06-04 03:15:15', '{\"Console\\/Mode\":\"collapse\",\"lang\":\"en_GB\",\"NavigationWidth\":214}');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__usergroups`
+--
+
+CREATE TABLE `pma__usergroups` (
+  `usergroup` varchar(64) NOT NULL,
+  `tab` varchar(64) NOT NULL,
+  `allowed` enum('Y','N') NOT NULL DEFAULT 'N'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='User groups with configured menu items';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pma__users`
+--
+
+CREATE TABLE `pma__users` (
+  `username` varchar(64) NOT NULL,
+  `usergroup` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Users and their assignments to user groups';
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `pma__bookmark`
+--
+ALTER TABLE `pma__bookmark`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pma__central_columns`
+--
+ALTER TABLE `pma__central_columns`
+  ADD PRIMARY KEY (`db_name`,`col_name`);
+
+--
+-- Indexes for table `pma__column_info`
+--
+ALTER TABLE `pma__column_info`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `db_name` (`db_name`,`table_name`,`column_name`);
+
+--
+-- Indexes for table `pma__designer_settings`
+--
+ALTER TABLE `pma__designer_settings`
+  ADD PRIMARY KEY (`username`);
+
+--
+-- Indexes for table `pma__export_templates`
+--
+ALTER TABLE `pma__export_templates`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `u_user_type_template` (`username`,`export_type`,`template_name`);
+
+--
+-- Indexes for table `pma__favorite`
+--
+ALTER TABLE `pma__favorite`
+  ADD PRIMARY KEY (`username`);
+
+--
+-- Indexes for table `pma__history`
+--
+ALTER TABLE `pma__history`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `username` (`username`,`db`,`table`,`timevalue`);
+
+--
+-- Indexes for table `pma__navigationhiding`
+--
+ALTER TABLE `pma__navigationhiding`
+  ADD PRIMARY KEY (`username`,`item_name`,`item_type`,`db_name`,`table_name`);
+
+--
+-- Indexes for table `pma__pdf_pages`
+--
+ALTER TABLE `pma__pdf_pages`
+  ADD PRIMARY KEY (`page_nr`),
+  ADD KEY `db_name` (`db_name`);
+
+--
+-- Indexes for table `pma__recent`
+--
+ALTER TABLE `pma__recent`
+  ADD PRIMARY KEY (`username`);
+
+--
+-- Indexes for table `pma__relation`
+--
+ALTER TABLE `pma__relation`
+  ADD PRIMARY KEY (`master_db`,`master_table`,`master_field`),
+  ADD KEY `foreign_field` (`foreign_db`,`foreign_table`);
+
+--
+-- Indexes for table `pma__savedsearches`
+--
+ALTER TABLE `pma__savedsearches`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `u_savedsearches_username_dbname` (`username`,`db_name`,`search_name`);
+
+--
+-- Indexes for table `pma__table_coords`
+--
+ALTER TABLE `pma__table_coords`
+  ADD PRIMARY KEY (`db_name`,`table_name`,`pdf_page_number`);
+
+--
+-- Indexes for table `pma__table_info`
+--
+ALTER TABLE `pma__table_info`
+  ADD PRIMARY KEY (`db_name`,`table_name`);
+
+--
+-- Indexes for table `pma__table_uiprefs`
+--
+ALTER TABLE `pma__table_uiprefs`
+  ADD PRIMARY KEY (`username`,`db_name`,`table_name`);
+
+--
+-- Indexes for table `pma__tracking`
+--
+ALTER TABLE `pma__tracking`
+  ADD PRIMARY KEY (`db_name`,`table_name`,`version`);
+
+--
+-- Indexes for table `pma__userconfig`
+--
+ALTER TABLE `pma__userconfig`
+  ADD PRIMARY KEY (`username`);
+
+--
+-- Indexes for table `pma__usergroups`
+--
+ALTER TABLE `pma__usergroups`
+  ADD PRIMARY KEY (`usergroup`,`tab`,`allowed`);
+
+--
+-- Indexes for table `pma__users`
+--
+ALTER TABLE `pma__users`
+  ADD PRIMARY KEY (`username`,`usergroup`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `pma__bookmark`
+--
+ALTER TABLE `pma__bookmark`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pma__column_info`
+--
+ALTER TABLE `pma__column_info`
+  MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pma__export_templates`
+--
+ALTER TABLE `pma__export_templates`
+  MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pma__history`
+--
+ALTER TABLE `pma__history`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pma__pdf_pages`
+--
+ALTER TABLE `pma__pdf_pages`
+  MODIFY `page_nr` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `pma__savedsearches`
+--
+ALTER TABLE `pma__savedsearches`
+  MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- Database: `student_db`
+--
+CREATE DATABASE IF NOT EXISTS `student_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `student_db`;
+--
+-- Database: `student_record`
+--
+CREATE DATABASE IF NOT EXISTS `student_record` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `student_record`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `students`
+--
+
+CREATE TABLE `students` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `course` varchar(100) DEFAULT NULL,
+  `year_level` varchar(50) DEFAULT NULL,
+  `section` varchar(50) DEFAULT NULL,
+  `gender` varchar(10) DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `students`
+--
+
+INSERT INTO `students` (`id`, `name`, `course`, `year_level`, `section`, `gender`, `address`, `phone`) VALUES
+(5, 'De Guia, Francis Carlo S.', 'CS', '3', 'B', 'Male', 'Calungbuyan, Lidldda, Ilocos Sur', '+63 911 110 101'),
+(6, 'Sumbad, Vinico', 'CS', '3', 'B', 'Male', 'N/A', '+63 910 010 001'),
+(7, 'Sabuquel, Bryan Kenneth', 'CS', '3', 'B', 'Male', 'N/A', '+63 911 110 101'),
+(8, 'Ablan, Angelbert James', 'CS', '3', 'B', 'Male', 'N/A', '+63 910 110 101'),
+(9, 'Cortes, Juswa', 'CS', '3', 'B', 'Female', 'N/A', '+63 911 110 101'),
+(10, 'Peralta, Jerby', 'CS', '3', 'B', 'Male', 'N/A', '+63 910 010 001');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `students`
+--
+ALTER TABLE `students`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `students`
+--
+ALTER TABLE `students`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+--
+-- Database: `task`
+--
+CREATE DATABASE IF NOT EXISTS `task` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `task`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tasks`
+--
+
+CREATE TABLE `tasks` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `due_date` date NOT NULL,
+  `status` enum('pending','done') DEFAULT 'pending'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tasks`
+--
+
+INSERT INTO `tasks` (`id`, `title`, `due_date`, `status`) VALUES
+(3, 'jogging', '2025-05-27', 'done'),
+(4, 'jogging', '2025-05-30', 'pending');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `tasks`
+--
+ALTER TABLE `tasks`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `tasks`
+--
+ALTER TABLE `tasks`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- Database: `task_manager`
+--
+CREATE DATABASE IF NOT EXISTS `task_manager` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `task_manager`;
+--
+-- Database: `test`
+--
+CREATE DATABASE IF NOT EXISTS `test` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `test`;
+--
+-- Database: `userform`
+--
+CREATE DATABASE IF NOT EXISTS `userform` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `userform`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `usertable`
+--
+
+CREATE TABLE `usertable` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `code` mediumint(50) NOT NULL,
+  `status` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `usertable`
+--
+
+INSERT INTO `usertable` (`id`, `name`, `email`, `password`, `code`, `status`) VALUES
+(1, 'Bryan', 'sabuquelbryankent@gmail.com', '$2y$10$vosL0AoukGLgn7eALLjMreHv85w7rseLYA4BOUAhlzDucupOSka7q', 155850, 'notverified');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `usertable`
+--
+ALTER TABLE `usertable`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `usertable`
+--
+ALTER TABLE `usertable`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- Database: `usertable`
+--
+CREATE DATABASE IF NOT EXISTS `usertable` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `usertable`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `usertable`
+--
+
+CREATE TABLE `usertable` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `code` mediumint(50) NOT NULL,
+  `status` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `usertable`
+--
+ALTER TABLE `usertable`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `usertable`
+--
+ALTER TABLE `usertable`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- Database: `verification_cortez`
+--
+CREATE DATABASE IF NOT EXISTS `verification_cortez` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `verification_cortez`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `email` text NOT NULL,
+  `password` text NOT NULL,
+  `verification_code` text NOT NULL,
+  `email_verified_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `verification_code`, `email_verified_at`) VALUES
+(0, '', 'cortezjoshuagironella@gmail.com', '$2y$10$/Xrpy98Ipvt1ajHYzVPY3eWTBB0HKRpnmIyx8xmFtTID2MkmKuinW', '335299', '2025-05-15 10:42:06');
+--
+-- Database: `verification_de_guia`
+--
+CREATE DATABASE IF NOT EXISTS `verification_de_guia` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `verification_de_guia`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `email` text NOT NULL,
+  `password` text NOT NULL,
+  `verification_code` text NOT NULL,
+  `email_verified_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `verification_code`, `email_verified_at`) VALUES
+(0, 'Bryan', 'sabuquelbryankent@gmail.com', '$2y$10$dcJYSisyTHGX2kWUho4P9.PPP0xGVkT3COCyZgESAtq9ZmiPkFsWq', '954821', '2025-04-27 21:24:28'),
+(0, 'Francis Carlo S. De Guia', 'sabuqueldeguiafranciscarlo@gmail.com', '$2y$10$X3dvsVzpIYp/QL7KmDxRleKv2ODDbonw0pa1rYqQbY4S9XRU58KS2', '142239', '2025-04-27 22:07:21'),
+(0, 'Francis Carlo S. De Guia', 'sabuqueldeguiafranciscarlo@gmail.com', '$2y$10$prd4NVs9RRPVoVBxNNJXHOzCWt5W7uUXbkyibnMjVfJlbO4ObOnje', '243343', '2025-04-27 22:10:15'),
+(0, 'Francis Carlo S. De Guia', 'francissdeguia@gmail.com', '$2y$10$d4wL7PhfMh0vPHz9d6VdbuOI9l5rS73admIZIYm34J4MtcFFKEosC', '367397', '2025-04-27 22:15:30');
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+New db:
+
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Mar 12, 2026 at 10:34 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `mswdo_aps_db`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `beneficiaries`
+--
+
+CREATE TABLE `beneficiaries` (
+  `beneficiary_id` int(11) NOT NULL,
+  `client_id` int(11) DEFAULT NULL,
+  `last_name` varchar(100) DEFAULT NULL,
+  `first_name` varchar(100) DEFAULT NULL,
+  `middle_name` varchar(100) DEFAULT NULL,
+  `ext` varchar(10) DEFAULT NULL,
+  `street_address` varchar(255) DEFAULT NULL,
+  `barangay` varchar(100) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `province` varchar(100) DEFAULT NULL,
+  `region` varchar(100) DEFAULT NULL,
+  `mobile_number` varchar(20) DEFAULT NULL,
+  `birthdate` date DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `sex` enum('Male','Female','Other') DEFAULT NULL,
+  `civil_status` varchar(50) DEFAULT NULL,
+  `occupation` varchar(100) DEFAULT NULL,
+  `monthly_income` decimal(15,2) DEFAULT NULL,
+  `received_dswd_assistance` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `clients`
+--
+
+CREATE TABLE `clients` (
+  `client_id` int(11) NOT NULL,
+  `last_name` varchar(100) DEFAULT NULL,
+  `first_name` varchar(100) DEFAULT NULL,
+  `middle_name` varchar(100) DEFAULT NULL,
+  `ext` varchar(10) DEFAULT NULL,
+  `street_address` varchar(255) DEFAULT NULL,
+  `barangay` varchar(100) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `province` varchar(100) DEFAULT NULL,
+  `region` varchar(100) DEFAULT NULL,
+  `mobile_number` varchar(20) DEFAULT NULL,
+  `birthdate` date DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `sex` enum('Male','Female','Other') DEFAULT NULL,
+  `civil_status` varchar(50) DEFAULT NULL,
+  `occupation` varchar(100) DEFAULT NULL,
+  `monthly_income` decimal(15,2) DEFAULT NULL,
+  `relationship_to_beneficiary` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dswd_assistance`
+--
+
+CREATE TABLE `dswd_assistance` (
+  `assistance_id` int(11) NOT NULL,
+  `beneficiary_id` int(11) DEFAULT NULL,
+  `assistance_type` varchar(255) DEFAULT NULL,
+  `date_received` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `family_composition`
+--
+
+CREATE TABLE `family_composition` (
+  `family_member_id` int(11) NOT NULL,
+  `beneficiary_id` int(11) DEFAULT NULL,
+  `full_name` varchar(255) DEFAULT NULL,
+  `relationship_to_beneficiary` varchar(100) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `occupation` varchar(100) DEFAULT NULL,
+  `monthly_income` decimal(15,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `financial_assistance`
+--
+
+CREATE TABLE `financial_assistance` (
+  `fa_id` int(11) NOT NULL,
+  `intake_id` int(11) DEFAULT NULL,
+  `medical` tinyint(1) DEFAULT NULL,
+  `funeral` tinyint(1) DEFAULT NULL,
+  `transportation` tinyint(1) DEFAULT NULL,
+  `educational` tinyint(1) DEFAULT NULL,
+  `food_assistance` tinyint(1) DEFAULT NULL,
+  `cash_relief` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `general_intake`
+--
+
+CREATE TABLE `general_intake` (
+  `intake_id` int(11) NOT NULL,
+  `beneficiary_id` int(11) DEFAULT NULL,
+  `aics` tinyint(1) DEFAULT NULL,
+  `akap` tinyint(1) DEFAULT NULL,
+  `others_program` varchar(255) DEFAULT NULL,
+  `visit_type` enum('New','Returning') DEFAULT NULL,
+  `onsite` tinyint(1) DEFAULT NULL,
+  `malasakit_center` tinyint(1) DEFAULT NULL,
+  `offsite` tinyint(1) DEFAULT NULL,
+  `client_source` enum('Walk-in','Referral') DEFAULT NULL,
+  `intake_date` date DEFAULT NULL,
+  `purpose_of_assistance` text DEFAULT NULL,
+  `diagnosis_or_cause_of_death` text DEFAULT NULL,
+  `mode_of_assistance` varchar(255) DEFAULT NULL,
+  `amount_needed` decimal(15,2) DEFAULT NULL,
+  `income_employed` int(11) DEFAULT NULL,
+  `income_seasonal` int(11) DEFAULT NULL,
+  `combined_family_income` decimal(15,2) DEFAULT NULL,
+  `insurance` varchar(255) DEFAULT NULL,
+  `savings` varchar(255) DEFAULT NULL,
+  `monthly_expenses` tinyint(1) DEFAULT NULL,
+  `emergency_fund` tinyint(1) DEFAULT NULL,
+  `severity_crisis` varchar(255) DEFAULT NULL,
+  `experienced_crisis` tinyint(1) DEFAULT NULL,
+  `crisis_details` text DEFAULT NULL,
+  `support_systems` text DEFAULT NULL,
+  `external_resources` text DEFAULT NULL,
+  `self_help` text DEFAULT NULL,
+  `vulnerability_risk` text DEFAULT NULL,
+  `client_sector` text DEFAULT NULL,
+  `sub_category` text DEFAULT NULL,
+  `source_of_income` text DEFAULT NULL,
+  `total_income_6months` decimal(15,2) DEFAULT NULL,
+  `problem_presented` text DEFAULT NULL,
+  `social_worker_assessment` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `material_assistance`
+--
+
+CREATE TABLE `material_assistance` (
+  `ma_id` int(11) NOT NULL,
+  `intake_id` int(11) DEFAULT NULL,
+  `family_food_packs` tinyint(1) DEFAULT NULL,
+  `other_food_items` tinyint(1) DEFAULT NULL,
+  `hygiene_sleeping_kits` tinyint(1) DEFAULT NULL,
+  `assistive_devices` tinyint(1) DEFAULT NULL,
+  `rice` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `psychosocial_support`
+--
+
+CREATE TABLE `psychosocial_support` (
+  `ps_id` int(11) NOT NULL,
+  `intake_id` int(11) DEFAULT NULL,
+  `pfa` tinyint(1) DEFAULT NULL,
+  `counseling` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `relief_distribution`
+--
+
+CREATE TABLE `relief_distribution` (
+  `rd_id` int(11) NOT NULL,
+  `beneficiary_id` int(11) DEFAULT NULL,
+  `last_name` varchar(100) DEFAULT NULL,
+  `first_name` varchar(100) DEFAULT NULL,
+  `middle_name` varchar(100) DEFAULT NULL,
+  `ext` varchar(10) DEFAULT NULL,
+  `sex` enum('Male','Female','Other') DEFAULT NULL,
+  `birthdate` date DEFAULT NULL,
+  `sectors` varchar(255) DEFAULT NULL,
+  `indigenous_member` varchar(255) DEFAULT NULL,
+  `ffp_quantity` int(11) DEFAULT NULL,
+  `hk_quantity` int(11) DEFAULT NULL,
+  `fk_quantity` int(11) DEFAULT NULL,
+  `kk_quantity` int(11) DEFAULT NULL,
+  `sk_quantity` int(11) DEFAULT NULL,
+  `others_quantity` varchar(255) DEFAULT NULL,
+  `barangay` varchar(100) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `province` varchar(100) DEFAULT NULL,
+  `signature` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `beneficiaries`
+--
+ALTER TABLE `beneficiaries`
+  ADD PRIMARY KEY (`beneficiary_id`),
+  ADD KEY `client_id` (`client_id`);
+
+--
+-- Indexes for table `clients`
+--
+ALTER TABLE `clients`
+  ADD PRIMARY KEY (`client_id`);
+
+--
+-- Indexes for table `dswd_assistance`
+--
+ALTER TABLE `dswd_assistance`
+  ADD PRIMARY KEY (`assistance_id`),
+  ADD KEY `beneficiary_id` (`beneficiary_id`);
+
+--
+-- Indexes for table `family_composition`
+--
+ALTER TABLE `family_composition`
+  ADD PRIMARY KEY (`family_member_id`),
+  ADD KEY `beneficiary_id` (`beneficiary_id`);
+
+--
+-- Indexes for table `financial_assistance`
+--
+ALTER TABLE `financial_assistance`
+  ADD PRIMARY KEY (`fa_id`),
+  ADD KEY `intake_id` (`intake_id`);
+
+--
+-- Indexes for table `general_intake`
+--
+ALTER TABLE `general_intake`
+  ADD PRIMARY KEY (`intake_id`),
+  ADD KEY `beneficiary_id` (`beneficiary_id`);
+
+--
+-- Indexes for table `material_assistance`
+--
+ALTER TABLE `material_assistance`
+  ADD PRIMARY KEY (`ma_id`),
+  ADD KEY `intake_id` (`intake_id`);
+
+--
+-- Indexes for table `psychosocial_support`
+--
+ALTER TABLE `psychosocial_support`
+  ADD PRIMARY KEY (`ps_id`),
+  ADD KEY `intake_id` (`intake_id`);
+
+--
+-- Indexes for table `relief_distribution`
+--
+ALTER TABLE `relief_distribution`
+  ADD PRIMARY KEY (`rd_id`),
+  ADD KEY `beneficiary_id` (`beneficiary_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `beneficiaries`
+--
+ALTER TABLE `beneficiaries`
+  MODIFY `beneficiary_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `clients`
+--
+ALTER TABLE `clients`
+  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `dswd_assistance`
+--
+ALTER TABLE `dswd_assistance`
+  MODIFY `assistance_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `family_composition`
+--
+ALTER TABLE `family_composition`
+  MODIFY `family_member_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `financial_assistance`
+--
+ALTER TABLE `financial_assistance`
+  MODIFY `fa_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `general_intake`
+--
+ALTER TABLE `general_intake`
+  MODIFY `intake_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `material_assistance`
+--
+ALTER TABLE `material_assistance`
+  MODIFY `ma_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `psychosocial_support`
+--
+ALTER TABLE `psychosocial_support`
+  MODIFY `ps_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `relief_distribution`
+--
+ALTER TABLE `relief_distribution`
+  MODIFY `rd_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `beneficiaries`
+--
+ALTER TABLE `beneficiaries`
+  ADD CONSTRAINT `beneficiaries_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `clients` (`client_id`);
+
+--
+-- Constraints for table `dswd_assistance`
+--
+ALTER TABLE `dswd_assistance`
+  ADD CONSTRAINT `dswd_assistance_ibfk_1` FOREIGN KEY (`beneficiary_id`) REFERENCES `beneficiaries` (`beneficiary_id`);
+
+--
+-- Constraints for table `family_composition`
+--
+ALTER TABLE `family_composition`
+  ADD CONSTRAINT `family_composition_ibfk_1` FOREIGN KEY (`beneficiary_id`) REFERENCES `beneficiaries` (`beneficiary_id`);
+
+--
+-- Constraints for table `financial_assistance`
+--
+ALTER TABLE `financial_assistance`
+  ADD CONSTRAINT `financial_assistance_ibfk_1` FOREIGN KEY (`intake_id`) REFERENCES `general_intake` (`intake_id`);
+
+--
+-- Constraints for table `general_intake`
+--
+ALTER TABLE `general_intake`
+  ADD CONSTRAINT `general_intake_ibfk_1` FOREIGN KEY (`beneficiary_id`) REFERENCES `beneficiaries` (`beneficiary_id`);
+
+--
+-- Constraints for table `material_assistance`
+--
+ALTER TABLE `material_assistance`
+  ADD CONSTRAINT `material_assistance_ibfk_1` FOREIGN KEY (`intake_id`) REFERENCES `general_intake` (`intake_id`);
+
+--
+-- Constraints for table `psychosocial_support`
+--
+ALTER TABLE `psychosocial_support`
+  ADD CONSTRAINT `psychosocial_support_ibfk_1` FOREIGN KEY (`intake_id`) REFERENCES `general_intake` (`intake_id`);
+
+--
+-- Constraints for table `relief_distribution`
+--
+ALTER TABLE `relief_distribution`
+  ADD CONSTRAINT `relief_distribution_ibfk_1` FOREIGN KEY (`beneficiary_id`) REFERENCES `beneficiaries` (`beneficiary_id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

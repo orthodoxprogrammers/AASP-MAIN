@@ -1,0 +1,483 @@
+====================================================================
+INFORMATION SHEET
+====================================================================
+IMPORMASYON NG KINATAWAN/KLIYENTE (Authorized Representative's/Client's Identifying Information)
+Apelyido (Last Name)
+Unang Pangalan (First Name)
+Gitnang Pangalan (Middle Name)
+Ext. (Sr,Jr,l,Jl)
+
+Numero ng Bahay/Kalye (Street Address)
+Barangay (Ex. Batasan Hills)
+Lungsod/Bayan (City/Municipality)
+Lalawigan/Distrito (Province/District) 
+Rehiyon (Region)
+
+Numero ng Mobile (Mobile No.)
+Petsa ng Kapanganakan (Birthdate) MM-DD-YYYY
+Edad (Age)
+Kasarian (Sex)
+Katayuang Sibil (Civil Status)
+Hanapbuhay (Occupation)
+Buwanang Kita (Monthly Income)
+Relasyon sa Benepisyaryo (Relationship to the Beneficiary)
+
+=====================================================================
+IMPORMASYON NG BENEPISYARYO (Beneficiary's Identifying Information)
+Apelyido (Last Name)
+Unang Pangalan (First Name)
+Gitnang Pangalan (Middle Name)
+Ext. (Sr,Jr,l,Jl)
+
+Numero ng Bahay/Kalye (Street Address)
+Barangay (Ex. Batasan Hills)
+Lungsod/Bayan (City/Municipality)
+Lalawigan/Distrito (Province/District) 
+Rehiyon (Region)
+
+Numero ng Mobile (Mobile No.)
+Petsa ng Kapanganakan (Birthdate) MM-DD-YYYY
+Edad (Age)
+Kasarian (Sex)
+Katayuang Sibil (Civil Status)
+Hanapbuhay (Occupation)
+Buwanang Kita (Monthly Income)
+
+Ikaw ba ay nakakuha na ng tulong mula sa DSWD? (Have you received any assistance from the DSWD?) 
+Yes/No Checkbox
+
+Natanggap na tulong sa DSWD(Assistance received from DSWD)      Petsa ng tulong (Date of assistance received)
+1.______________                                                ______________
+2.______________                                                ______________
+3.______________                                                ______________
+add more line button.
+
+KOMPOSISYON NG PAMILYA (Family Composition)
+"Table"
+Buong Pangalan(Full Name)
+Relasyon sa Benepisyaryo(Relationship to the Beneficiary)
+Edad(Age)
+Hanapbuhay(Occupation)
+Buwanang Kita(Monthly Income)
+Add Table Row button
+
+
+====================================================================
+GENERAL INTAKE SHEET
+====================================================================
+
+Column 1
+AICS    (checkbox)
+AKAP    (checkbox)
+Others: (checkbox)
+
+Column 2(Choose only 1)
+New
+Returning
+
+Column 3
+Onsite              (checkbox)
+Malasakit Center    (checkbox)
+Offsite             (checkbox)
+
+Column 4(Choose only 1)
+Walk-in
+Referral
+
+Column 5
+Date: MM-DD-YYYY
+
+CLIENT'S NAME
+Last Name
+First Name
+Middle Name
+Ext. (Sr,Jr,I,Il)
+
+BENEFICIARY'S NAME
+Last Name
+First Name
+Middle Name
+Ext. (Sr,Jr,I,Il)
+
+PURPOSE OF ASSISTANCE:
+DIAGNOSIS/CAUSE OF DEATH (if funeral):
+MODE OF ASSISTANCE: Outright Cash/Guarantee Letter/Material Assistance/Psychosocial Support/Referral Service (checkbox)
+AMOUNT NEEDED: PhP 000.00
+
+I. INCOME AND FINANCIAL RESOURCES
+Occupation/s of family member
+(checkbox) Employed
+(indicate number of members working)    ______________
+(checkbox) Seasonal Employee
+(indicate number of members working)    ______________
+(checkbox)Combined family income        ______________
+(textbox)Insurance
+(textbox)Savings
+
+IL. BUDGET AND EXPENSES
+(checkbox)Monthly expenses of the family______________
+(Utility bills, Maintenance and Medication, Mortgage/Rent, Debt, and Others)
+(checkbox)Availability of emergency fund
+
+III. SEVERITY OF THE CRISIS
+How long does the patient suffer from the disease?
+(checkbox)Recently diagnosed (3mos & below)
+(checkbox)3 months to a year
+(checkbox)chronic or lifelong
+(checkbox)not applicable
+In the past three (3) months, did the family experience at least one crisis?
+(checkbox)YES   (checkbox)NO
+
+If yes, which among the following crises did the family experience in the past three (3) months (check all that apply):
+(checkbox)Hospitalization
+(checkbox)Death of a family member
+(checkbox)Catastrophic Event (fire, earthquake, flooding, etc.)
+(checkbox)Disablement
+(checkbox)Loss of Livelihood
+(checkbox)Others, specify________________
+
+IV. AVAILABILITY OF SUPPORT SYSTEMS
+(checkbox)Family
+(checkbox)Relatives
+(checkbox)Friend/s
+(checkbox)Employer
+(checkbox)Church/Community Organization
+
+V. EXTERNAL RESOURCES TAPPED BY THE FAMILY
+(checkbox)Philhealth
+(checkbox)Health Card
+(checkbox)Guarantee Letter from other agencies
+(checkbox)MSS Discount
+(checkbox)Senior Citizen Discount
+(checkbox)PWD Discount
+(checkbox)Others, specify
+(checkbox)Not applicable
+
+VI. SELF HELP AND CLIENT EFFORTS
+(checkbox)Successfully sought employment opportunities or explored additional income sources
+(checkbox)Successfully reached out to relevant organizatior
+
+VII. VULNERABILITY AND RISK FACTORS
+(checkbox)There are elderly/ Child in need/ PWD/Pregnant in the household
+(checkbox)A member is physically or mentally incapacitated to work
+(checkbox)Inability to secure stable employment
+
+VIII. CLIENT SECTOR
+Target Sector:
+(checkbox)FHONA
+(checkbox)WEDC
+(checkbox)PWD
+(checkbox)CNSP
+(checkbox)SC
+(checkbox)YNSP
+(checkbox)PLHIV
+
+Specify Sub-Category:
+(checkbox)Solo Parent
+(checkbox)Indigenous People
+(checkbox)Street Dwellers
+(checkbox)KIA/WIA
+(checkbox)4PS Beneficiary
+(checkbox)Stateless Person
+(checkbox)Asylum Seekers
+(checkbox)Refugees
+(checkbox)Recovering Person Who Used Drugs
+(checkbox)Minimum Wage Earner
+(checkbox)Minimum Wage Earner
+(checkbox)Below Minimum Wage Earner (specify approximate monthly income)Php______________
+(checkbox)No Regular Income
+(checkbox)Others:______________
+
+Source of Income:                                       Amount:
+(checkbox)Salaries/Wages from Employment                Php______________
+(checkbox)Entrepreneurial income/profits                Php______________
+(checkbox)Cash assistance from domestic source          Php______________
+(checkbox)Cash assistance from abroad                   Php______________
+(checkbox)Transfers from the government (e.g. 4Ps)      Php______________
+(checkbox)Pension                                       Php______________
+(checkbox)Other income                                  Php______________
+Total income in the past 6 months                       Php______________
+
+IX. PROBLEM PRESENTED
+Herein client was referred by the office to seek financial assistance to defray his/her basic necessities as disclosed that they are unable to
+find stable source of income.
+
+X. SOCIAL WORKER'S ASSESSMENT
+Client belongs to one of the marginalized sector in the community. They derived basic needs through a hand-to-mouth basis in which client
+disclosed difficulty in coping up with their current situation as they have already exhausted most of their internal and external resources. In
+view hereof, client is recommended to avail financial assistance.
+
+FINANCIAL ASSISTANCE
+(checkbox)Medical
+(checkbox)Funeral
+(checkbox)Transportation
+(checkbox)Educational
+(checkbox)Food Assistance
+(checkbox)Cash Relief Assistance
+
+MATERIAL ASSISTANCE
+(checkbox)Family Food Packs
+(checkbox)Other Food Items
+(checkbox)Hygiene & Sleeping Kits
+(checkbox)Assistive Devices & Technologies
+(checkbox)Rice
+
+PSYCHOSOCIAL SUPPORT
+(checkbox)Psychosocial First Aid (PFA)
+(checkbox)Social Work Counseling
+
+REFERRAL:
+______________
+______________
+______________
+______________
+______________
+
+Purpose of Assistance(Table)
+1.DAILY NEEDS
+2.
+3.
+Amount
+1.,000.00
+2.
+3.
+Fund Source
+1.2025
+2.
+3.
+
+==========================================================
+RELIEF DISTRIBUTION SHEET
+==========================================================
+
+Table
+Name
+Last Name/Fist Name/Middle Name/Ext(Jr.,Sr.,III): 3 Column
+
+Sex
+M/F: 2 Column
+
+Birthdate
+mm/dd/yyyy: 1 Column
+
+Sectors
+(Child, Youth, Senior Citizen, PWD, Pregnant, Solo Parent, 4P's Member): 1 Column
+
+Member of Indigenous People (specity): 1 Column
+
+QUANTITY AND KIND OF FOOD / NON-FOOD ITEMS (FNI) RECEIVED
+FFP(Faminly Food Pack)/HK(Hygiene Kit)/FK(Family Kit)/KK(Kitchen Kit)/SK(Sleeping Kit)/OTHERS(Lamiated Sacks, Malong, etc.): 6 Column
+
+BARANGAY: 1 Column
+
+CITY / MUNICIPALITY: 1 Column
+
+PROVINCE: 1 Column
+
+SIGNATURE/THUMBMARK: 1 Column
+
+
+
+
+
+Now instead of using manual Icons and buttons, can we use this to match the entire system design:
+css
+    bootstrap-icons-1.11.0
+    bootstrap.min.css
+    style.css
+
+style.css
+/* ==============================
+   GLOBAL RESET
+============================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* ==============================
+   BODY
+============================== */
+body {
+    background: #fbfbfb;
+    font-size: 0.85rem;
+}
+
+/* ==============================
+   SIDEBAR
+============================== */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 220px;
+    background: #ffffff;
+    color: rgb(0, 0, 0);
+    border-right: 1px solid rgba(233, 233, 233, 0.436);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.035);
+    font-size: 0.875rem;
+}
+
+.sidebar h4 {
+    padding: 10px 15px;
+    border-bottom: 1px solid #334155;
+}
+
+.sidebar a {
+    display: block;
+    color: rgb(0, 0, 0);
+    padding: 10px 15px;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.sidebar a:hover {
+    background: #e1e1e19a;
+    border-radius: 5px;
+}
+
+.sidebar i {
+    margin-right: 8px;
+}
+
+/* ==============================
+   CONTENT AREA
+============================== */
+.content {
+    margin-left: 220px;
+    padding: 15px;
+    font-size: 0.85rem;
+}
+
+/* ==============================
+   TOPBAR
+============================== */
+.topbar {
+    background: white;
+    padding: 10px 15px;
+    border-radius: 1px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.035);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
+}
+
+/* ==============================
+   CARDS
+============================== */
+.card, .tableCard {
+    border: none;
+    border-radius: 1px;
+    font-size: 0.875rem;
+    padding: 10px !important;
+}
+
+/* ==============================
+   TABLE
+============================== */
+.table {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 0.85rem !important;
+}
+
+.table th, .table td {
+    padding: 0.35rem 0.5rem !important;
+}
+
+/* ==============================
+   BUTTONS
+============================== */
+.btnStyles, .btn {
+    background: #fcfcfc;
+    color: #000000;
+    border: none;
+    font-size: 0.85rem !important;
+    padding: 0.25rem 0.5rem !important;
+    height: 2rem !important;
+}
+
+/* ==============================
+   FORMS / INPUTS
+============================== */
+form label {
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+/* ONLY style text inputs */
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="email"],
+input[type="tel"],
+select,
+textarea,
+input.form-control,
+select.form-control,
+textarea.form-control {
+
+    border-radius: 4px;
+    font-size: 0.85rem;
+    height: 2rem !important;
+    padding: 0.25rem 0.5rem !important;
+}
+
+/* hover effect for text inputs only */
+input[type="text"]:hover,
+input[type="number"]:hover,
+input[type="date"]:hover,
+select:hover,
+textarea:hover {
+    background: #c0c0c020;
+}
+
+/* ==============================
+   CHECKBOX FIX
+============================== */
+input[type="checkbox"],
+input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    padding: 0;
+}
+
+/* ==============================
+   SEARCH + FILTER ROW
+============================== */
+.search-filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.search-filter-row input {
+    flex: 1;
+    height: 2rem !important;
+    font-size: 0.85rem;
+}
+
+.search-filter-row select, .search-filter-row button {
+    flex-shrink: 0;
+    width: 150px;
+    height: 2rem !important;
+    font-size: 0.85rem;
+}
+
+/* ==============================
+   PAGINATION
+============================== */
+.pagination {
+    font-size: 0.85rem !important;
+}
+
+.pagination li a, .pagination li span {
+    padding: 0.25rem 0.5rem !important;
+}

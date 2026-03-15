@@ -1,0 +1,723 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Mar 14, 2026 at 03:10 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `mswdo_aps_db`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `beneficiaries`
+--
+
+CREATE TABLE `beneficiaries` (
+  `beneficiary_id` int(11) NOT NULL,
+  `client_id` int(11) DEFAULT NULL,
+  `last_name` varchar(100) DEFAULT NULL,
+  `first_name` varchar(100) DEFAULT NULL,
+  `middle_name` varchar(100) DEFAULT NULL,
+  `ext` varchar(10) DEFAULT NULL,
+  `street_address` varchar(255) DEFAULT NULL,
+  `barangay` varchar(100) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `province` varchar(100) DEFAULT NULL,
+  `region` varchar(100) DEFAULT NULL,
+  `mobile_number` varchar(20) DEFAULT NULL,
+  `birthdate` date DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `sex` enum('Male','Female','Other') DEFAULT NULL,
+  `civil_status` varchar(50) DEFAULT NULL,
+  `occupation` varchar(100) DEFAULT NULL,
+  `monthly_income` decimal(15,2) DEFAULT NULL,
+  `received_dswd_assistance` tinyint(1) DEFAULT NULL,
+  `income_category` enum('No Regular Income','Below Minimum Wage','Minimum Wage Earner') DEFAULT NULL,
+  `is_4ps` tinyint(1) DEFAULT 0,
+  `philhealth_member` tinyint(1) DEFAULT 0,
+  `dependents_count` int(11) DEFAULT 0,
+  `working_members_count` int(11) DEFAULT 0,
+  `age_group` varchar(50) DEFAULT NULL,
+  `indigenous_group` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `beneficiaries`
+--
+
+INSERT INTO `beneficiaries` (`beneficiary_id`, `client_id`, `last_name`, `first_name`, `middle_name`, `ext`, `street_address`, `barangay`, `city`, `province`, `region`, `mobile_number`, `birthdate`, `age`, `sex`, `civil_status`, `occupation`, `monthly_income`, `received_dswd_assistance`, `income_category`, `is_4ps`, `philhealth_member`, `dependents_count`, `working_members_count`, `age_group`, `indigenous_group`, `created_at`, `updated_at`) VALUES
+(1, NULL, 'Dela Cruz', 'Juan', 'Santos', '', 'Purok 1', 'Banucal', 'Santa', 'Ilocos Sur', 'Region I', '09123456789', '1975-03-12', 49, 'Male', 'Married', 'Farmer', 5000.00, 1, NULL, 0, 0, 0, 0, NULL, NULL, '2026-03-12 13:20:19', '2026-03-12 13:20:36'),
+(2, NULL, 'Garcia', 'Maria', 'Lopez', '', 'Purok 2', 'Bequi-Walin', 'Santa', 'Ilocos Sur', 'Region I', '09123456780', '1982-07-21', 42, 'Female', 'Widowed', 'Vendor', 3000.00, 0, NULL, 0, 0, 0, 0, NULL, NULL, '2026-03-12 13:20:19', '2026-03-12 13:20:36'),
+(3, NULL, 'Ramos', 'Pedro', 'Diaz', '', 'Purok 3', 'Bugui', 'Santa', 'Ilocos Sur', 'Region I', '09123456781', '1968-11-05', 56, 'Male', 'Married', 'Fisherman', 4500.00, 1, NULL, 0, 0, 0, 0, NULL, NULL, '2026-03-12 13:20:19', '2026-03-12 13:20:36'),
+(4, NULL, 'Torres', 'Ana', 'Villanueva', '', 'Purok 4', 'Calungbuyan', 'Santa', 'Ilocos Sur', 'Region I', '09123456782', '1995-01-15', 29, 'Female', 'Single', 'None', 0.00, 0, NULL, 0, 0, 0, 0, NULL, NULL, '2026-03-12 13:20:19', '2026-03-12 13:20:36'),
+(5, NULL, 'Santos', 'Jose', 'Reyes', 'Jr', 'Purok 5', 'San Vicente (Kamatliwan)', 'Santa', 'Ilocos Sur', 'Region I', '09123456783', '1959-09-10', 65, 'Male', 'Married', 'Retired', 2000.00, 1, NULL, 0, 0, 0, 0, NULL, NULL, '2026-03-12 13:20:19', '2026-03-12 13:20:36'),
+(9, NULL, 'Sabuquel', 'Bryan Kenneth', '', '', 'Zone 3', 'Calungbuyan', 'Lidlidda', 'Ilocos Sur', 'Region 1', '', '0000-00-00', 24, 'Male', 'Single', 'Student', 1000.00, NULL, NULL, 0, 0, 0, 0, NULL, NULL, '2026-03-12 15:50:25', '2026-03-12 15:50:25'),
+(10, NULL, 'Sabuquel', 'Bryan Kenneth', '', '', 'Zone 3', 'Calungbuyan', 'Lidlidda', 'Ilocos Sur', 'Region 1', '', '0000-00-00', 24, 'Male', 'Single', 'Student', 1000.00, NULL, NULL, 0, 0, 0, 0, NULL, NULL, '2026-03-12 15:53:00', '2026-03-12 15:53:00'),
+(11, NULL, 'Sabuquel', 'Bryan Kenneth', '', '', 'Zone 3', 'Calungbuyan', 'Lidlidda', 'Ilocos Sur', 'Region 1', '', '0000-00-00', 24, 'Male', 'Single', 'Student', 1000.00, NULL, NULL, 0, 0, 0, 0, NULL, NULL, '2026-03-12 15:57:47', '2026-03-12 15:57:47');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `beneficiary_programs`
+--
+
+CREATE TABLE `beneficiary_programs` (
+  `id` int(11) NOT NULL,
+  `beneficiary_id` int(11) DEFAULT NULL,
+  `program_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `beneficiary_sectors`
+--
+
+CREATE TABLE `beneficiary_sectors` (
+  `id` int(11) NOT NULL,
+  `beneficiary_id` int(11) DEFAULT NULL,
+  `sector_name` varchar(100) DEFAULT NULL,
+  `sector_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `beneficiary_subcategories`
+--
+
+CREATE TABLE `beneficiary_subcategories` (
+  `subcategory_id` int(11) NOT NULL,
+  `beneficiary_id` int(11) NOT NULL,
+  `subcategory_name` varchar(150) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `beneficiary_subcategories`
+--
+
+INSERT INTO `beneficiary_subcategories` (`subcategory_id`, `beneficiary_id`, `subcategory_name`, `created_at`) VALUES
+(3, 9, 'Indigenous: Itneg', '2026-03-12 15:50:25');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `clients`
+--
+
+CREATE TABLE `clients` (
+  `client_id` int(11) NOT NULL,
+  `last_name` varchar(100) DEFAULT NULL,
+  `first_name` varchar(100) DEFAULT NULL,
+  `middle_name` varchar(100) DEFAULT NULL,
+  `ext` varchar(10) DEFAULT NULL,
+  `street_address` varchar(255) DEFAULT NULL,
+  `barangay` varchar(100) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `province` varchar(100) DEFAULT NULL,
+  `region` varchar(100) DEFAULT NULL,
+  `mobile_number` varchar(20) DEFAULT NULL,
+  `birthdate` date DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `sex` enum('Male','Female','Other') DEFAULT NULL,
+  `civil_status` varchar(50) DEFAULT NULL,
+  `occupation` varchar(100) DEFAULT NULL,
+  `monthly_income` decimal(15,2) DEFAULT NULL,
+  `relationship_to_beneficiary` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dswd_assistance`
+--
+
+CREATE TABLE `dswd_assistance` (
+  `assistance_id` int(11) NOT NULL,
+  `beneficiary_id` int(11) DEFAULT NULL,
+  `assistance_type` varchar(255) DEFAULT NULL,
+  `date_received` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `family_composition`
+--
+
+CREATE TABLE `family_composition` (
+  `family_member_id` int(11) NOT NULL,
+  `beneficiary_id` int(11) DEFAULT NULL,
+  `full_name` varchar(255) DEFAULT NULL,
+  `relationship_to_beneficiary` varchar(100) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `occupation` varchar(100) DEFAULT NULL,
+  `monthly_income` decimal(15,2) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `family_composition`
+--
+
+INSERT INTO `family_composition` (`family_member_id`, `beneficiary_id`, `full_name`, `relationship_to_beneficiary`, `age`, `occupation`, `monthly_income`, `created_at`) VALUES
+(1, 9, 'Francis', '0', 23, 'Student', 1000.00, '2026-03-12 15:50:25'),
+(2, 10, 'Francis', '0', 23, 'Student', 1000.00, '2026-03-12 15:53:00'),
+(3, 11, 'Francis Carlo De Guia', '0', 23, 'Student', 1000.00, '2026-03-12 15:57:47');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `financial_assistance`
+--
+
+CREATE TABLE `financial_assistance` (
+  `fa_id` int(11) NOT NULL,
+  `intake_id` int(11) DEFAULT NULL,
+  `medical` tinyint(1) DEFAULT NULL,
+  `funeral` tinyint(1) DEFAULT NULL,
+  `transportation` tinyint(1) DEFAULT NULL,
+  `educational` tinyint(1) DEFAULT NULL,
+  `food_assistance` tinyint(1) DEFAULT NULL,
+  `cash_relief` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `general_intake`
+--
+
+CREATE TABLE `general_intake` (
+  `intake_id` int(11) NOT NULL,
+  `beneficiary_id` int(11) DEFAULT NULL,
+  `aics` tinyint(1) DEFAULT NULL,
+  `akap` tinyint(1) DEFAULT NULL,
+  `others_program` varchar(255) DEFAULT NULL,
+  `visit_type` enum('New','Returning') DEFAULT NULL,
+  `onsite` tinyint(1) DEFAULT NULL,
+  `malasakit_center` tinyint(1) DEFAULT NULL,
+  `offsite` tinyint(1) DEFAULT NULL,
+  `client_source` enum('Walk-in','Referral') DEFAULT NULL,
+  `intake_date` date DEFAULT NULL,
+  `purpose_of_assistance` text DEFAULT NULL,
+  `diagnosis_or_cause_of_death` text DEFAULT NULL,
+  `mode_of_assistance` varchar(255) DEFAULT NULL,
+  `amount_needed` decimal(15,2) DEFAULT NULL,
+  `income_employed` int(11) DEFAULT NULL,
+  `income_seasonal` int(11) DEFAULT NULL,
+  `combined_family_income` decimal(15,2) DEFAULT NULL,
+  `insurance` varchar(255) DEFAULT NULL,
+  `savings` varchar(255) DEFAULT NULL,
+  `monthly_expenses` tinyint(1) DEFAULT NULL,
+  `emergency_fund` tinyint(1) DEFAULT NULL,
+  `severity_crisis` varchar(255) DEFAULT NULL,
+  `experienced_crisis` tinyint(1) DEFAULT NULL,
+  `crisis_details` text DEFAULT NULL,
+  `support_systems` text DEFAULT NULL,
+  `external_resources` text DEFAULT NULL,
+  `self_help` text DEFAULT NULL,
+  `vulnerability_risk` text DEFAULT NULL,
+  `client_sector` text DEFAULT NULL,
+  `sub_category` text DEFAULT NULL,
+  `source_of_income` text DEFAULT NULL,
+  `total_income_6months` decimal(15,2) DEFAULT NULL,
+  `problem_presented` text DEFAULT NULL,
+  `social_worker_assessment` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `status` enum('Pending','Approved','Released','Cancelled') DEFAULT 'Pending',
+  `amount_released` decimal(15,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `general_intake`
+--
+
+INSERT INTO `general_intake` (`intake_id`, `beneficiary_id`, `aics`, `akap`, `others_program`, `visit_type`, `onsite`, `malasakit_center`, `offsite`, `client_source`, `intake_date`, `purpose_of_assistance`, `diagnosis_or_cause_of_death`, `mode_of_assistance`, `amount_needed`, `income_employed`, `income_seasonal`, `combined_family_income`, `insurance`, `savings`, `monthly_expenses`, `emergency_fund`, `severity_crisis`, `experienced_crisis`, `crisis_details`, `support_systems`, `external_resources`, `self_help`, `vulnerability_risk`, `client_sector`, `sub_category`, `source_of_income`, `total_income_6months`, `problem_presented`, `social_worker_assessment`, `created_at`, `updated_at`, `status`, `amount_released`) VALUES
+(1, 9, 0, 0, '', 'New', NULL, NULL, NULL, 'Walk-in', '0000-00-00', '', NULL, NULL, 0.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-03-12 15:50:25', '2026-03-12 15:50:25', 'Pending', NULL),
+(2, 10, 0, 0, '', 'New', NULL, NULL, NULL, 'Walk-in', '0000-00-00', '', NULL, NULL, 0.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-03-12 15:53:00', '2026-03-12 15:53:00', 'Pending', NULL),
+(3, 11, 0, 0, '', 'New', NULL, NULL, NULL, 'Walk-in', '0000-00-00', '', NULL, NULL, 0.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-03-12 15:57:47', '2026-03-12 15:57:47', 'Pending', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `material_assistance`
+--
+
+CREATE TABLE `material_assistance` (
+  `ma_id` int(11) NOT NULL,
+  `intake_id` int(11) DEFAULT NULL,
+  `family_food_packs` tinyint(1) DEFAULT NULL,
+  `other_food_items` tinyint(1) DEFAULT NULL,
+  `hygiene_sleeping_kits` tinyint(1) DEFAULT NULL,
+  `assistive_devices` tinyint(1) DEFAULT NULL,
+  `rice` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `programs`
+--
+
+CREATE TABLE `programs` (
+  `program_id` int(11) NOT NULL,
+  `program_name` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `programs`
+--
+
+INSERT INTO `programs` (`program_id`, `program_name`) VALUES
+(1, '4Ps'),
+(2, 'PhilHealth'),
+(3, 'AICS'),
+(4, 'AKAP'),
+(5, 'Food Assistance'),
+(6, 'Cash Relief');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `psychosocial_support`
+--
+
+CREATE TABLE `psychosocial_support` (
+  `ps_id` int(11) NOT NULL,
+  `intake_id` int(11) DEFAULT NULL,
+  `pfa` tinyint(1) DEFAULT NULL,
+  `counseling` tinyint(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `relief_distribution`
+--
+
+CREATE TABLE `relief_distribution` (
+  `rd_id` int(11) NOT NULL,
+  `beneficiary_id` int(11) DEFAULT NULL,
+  `last_name` varchar(100) DEFAULT NULL,
+  `first_name` varchar(100) DEFAULT NULL,
+  `middle_name` varchar(100) DEFAULT NULL,
+  `ext` varchar(10) DEFAULT NULL,
+  `sex` enum('Male','Female','Other') DEFAULT NULL,
+  `birthdate` date DEFAULT NULL,
+  `sectors` varchar(255) DEFAULT NULL,
+  `indigenous_member` varchar(255) DEFAULT NULL,
+  `ffp_quantity` int(11) DEFAULT NULL,
+  `hk_quantity` int(11) DEFAULT NULL,
+  `fk_quantity` int(11) DEFAULT NULL,
+  `kk_quantity` int(11) DEFAULT NULL,
+  `sk_quantity` int(11) DEFAULT NULL,
+  `others_quantity` varchar(255) DEFAULT NULL,
+  `barangay` varchar(100) DEFAULT NULL,
+  `city` varchar(100) DEFAULT NULL,
+  `province` varchar(100) DEFAULT NULL,
+  `signature` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `roles`
+--
+
+CREATE TABLE `roles` (
+  `role_id` int(11) NOT NULL,
+  `role_name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`role_id`, `role_name`) VALUES
+(2, 'Barangay'),
+(1, 'MSWDO');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sectors`
+--
+
+CREATE TABLE `sectors` (
+  `sector_id` int(11) NOT NULL,
+  `sector_name` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `sectors`
+--
+
+INSERT INTO `sectors` (`sector_id`, `sector_name`) VALUES
+(5, 'Child in Need'),
+(6, 'Indigenous People'),
+(8, 'Out of School Youth'),
+(4, 'Pregnant'),
+(2, 'PWD'),
+(1, 'Senior Citizen'),
+(3, 'Solo Parent'),
+(7, 'Unemployed');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `barangay` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `username`, `password`, `role_id`, `barangay`, `created_at`) VALUES
+(1, 'mswdo', '$2y$10$c7totMs2z.hF/F8Rgf.bEu8nhPqokTXXL97PeF5fCx.iKMdI.RVBa', 1, NULL, '2026-03-12 10:06:57'),
+(2, 'banucal', '$2y$10$rNGhud7sMNuffMOJf95teeCQkjXgsR//OP6ftAf7tIjQevXl2M.8S', 2, 'Banucal', '2026-03-12 10:06:57'),
+(3, 'bequi_walin', '$2y$10$0/A92rxD3hUUr8m151Ud8.BuU4beZ2nCbXXRvEv5cGbXKLpc2umBe', 2, 'Bequi-Walin', '2026-03-12 10:06:57'),
+(4, 'bugui', '$2y$10$V1/OjSEHKJYnCjB45Rm15eQcYbb549tYlvav0HAu9VIWwL.NhyIBC', 2, 'Bugui', '2026-03-12 10:06:57'),
+(5, 'calungbuyan', '$2y$10$iXk0HRONWuAqWrdDt5xuWeyLgDB42BtK8gq3Npey0qi7pIdfmZvH6', 2, 'Calungbuyan', '2026-03-12 10:06:57'),
+(6, 'carcarabasa', '$2y$10$yxiM4WxW2gSuQKOaCWXkeufpzOWM6QWm1LJcO.xW6xebsDB7On.uC', 2, 'Carcarabasa', '2026-03-12 10:06:57'),
+(7, 'labut', '$2y$10$s7yJxUFwIEPy5pmx7RPCfuyNSbkAIR18oALa/1PFTPN5B20WKXLVe', 2, 'Labut', '2026-03-12 10:06:57'),
+(8, 'poblacion_norte', '$2y$10$lMAJpmeSbwISSJYqLJFmKulbNmQkp1x7DArBDo3nB64V/hgaTiqt2', 2, 'Poblacion Norte (Namatting)', '2026-03-12 10:06:57'),
+(9, 'poblacion_sur', '$2y$10$x.e/VVCR2cotiDxRsFK2puaYIjAEiNImrDwPq/zBE8IdQ8kFHjsOC', 2, 'Poblacion Sur (Demang)', '2026-03-12 10:06:57'),
+(10, 'san_vicente', '$2y$10$Z9s2b8VbCWpZs3D8LNxRUOGnCLfKkv2yqLoRXVg.zVXzhY0S1AgO.', 2, 'San Vicente (Kamatliwan)', '2026-03-12 10:06:57'),
+(11, 'suysuyan', '$2y$10$EZex6/RwlR1Mq4dWL8QaGOXPoGMLnxRXFAweSg6abTXwvtmAaayyS', 2, 'Suysuyan', '2026-03-12 10:06:57'),
+(12, 'tay_ac', '$2y$10$TYcxsSvevYfQFGxcm3hSTO7XpioQTVBcpy6xsMPbFmKSIiReAt3t2', 2, 'Tay-ac', '2026-03-12 10:06:57');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `beneficiaries`
+--
+ALTER TABLE `beneficiaries`
+  ADD PRIMARY KEY (`beneficiary_id`),
+  ADD KEY `client_id` (`client_id`),
+  ADD KEY `idx_barangay` (`barangay`),
+  ADD KEY `idx_income` (`income_category`),
+  ADD KEY `idx_sex` (`sex`),
+  ADD KEY `idx_age` (`age`),
+  ADD KEY `idx_identity` (`last_name`,`first_name`,`birthdate`);
+
+--
+-- Indexes for table `beneficiary_programs`
+--
+ALTER TABLE `beneficiary_programs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `beneficiary_id` (`beneficiary_id`),
+  ADD KEY `program_id` (`program_id`);
+
+--
+-- Indexes for table `beneficiary_sectors`
+--
+ALTER TABLE `beneficiary_sectors`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `beneficiary_id` (`beneficiary_id`),
+  ADD KEY `fk_sector` (`sector_id`);
+
+--
+-- Indexes for table `beneficiary_subcategories`
+--
+ALTER TABLE `beneficiary_subcategories`
+  ADD PRIMARY KEY (`subcategory_id`),
+  ADD KEY `beneficiary_id` (`beneficiary_id`);
+
+--
+-- Indexes for table `clients`
+--
+ALTER TABLE `clients`
+  ADD PRIMARY KEY (`client_id`);
+
+--
+-- Indexes for table `dswd_assistance`
+--
+ALTER TABLE `dswd_assistance`
+  ADD PRIMARY KEY (`assistance_id`),
+  ADD KEY `beneficiary_id` (`beneficiary_id`);
+
+--
+-- Indexes for table `family_composition`
+--
+ALTER TABLE `family_composition`
+  ADD PRIMARY KEY (`family_member_id`),
+  ADD KEY `beneficiary_id` (`beneficiary_id`);
+
+--
+-- Indexes for table `financial_assistance`
+--
+ALTER TABLE `financial_assistance`
+  ADD PRIMARY KEY (`fa_id`),
+  ADD KEY `intake_id` (`intake_id`);
+
+--
+-- Indexes for table `general_intake`
+--
+ALTER TABLE `general_intake`
+  ADD PRIMARY KEY (`intake_id`),
+  ADD KEY `beneficiary_id` (`beneficiary_id`),
+  ADD KEY `idx_intake_date` (`intake_date`);
+
+--
+-- Indexes for table `material_assistance`
+--
+ALTER TABLE `material_assistance`
+  ADD PRIMARY KEY (`ma_id`),
+  ADD KEY `intake_id` (`intake_id`);
+
+--
+-- Indexes for table `programs`
+--
+ALTER TABLE `programs`
+  ADD PRIMARY KEY (`program_id`);
+
+--
+-- Indexes for table `psychosocial_support`
+--
+ALTER TABLE `psychosocial_support`
+  ADD PRIMARY KEY (`ps_id`),
+  ADD KEY `intake_id` (`intake_id`);
+
+--
+-- Indexes for table `relief_distribution`
+--
+ALTER TABLE `relief_distribution`
+  ADD PRIMARY KEY (`rd_id`),
+  ADD KEY `beneficiary_id` (`beneficiary_id`);
+
+--
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`role_id`),
+  ADD UNIQUE KEY `role_name` (`role_name`);
+
+--
+-- Indexes for table `sectors`
+--
+ALTER TABLE `sectors`
+  ADD PRIMARY KEY (`sector_id`),
+  ADD UNIQUE KEY `sector_name` (`sector_name`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD KEY `role_id` (`role_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `beneficiaries`
+--
+ALTER TABLE `beneficiaries`
+  MODIFY `beneficiary_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `beneficiary_programs`
+--
+ALTER TABLE `beneficiary_programs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `beneficiary_sectors`
+--
+ALTER TABLE `beneficiary_sectors`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `beneficiary_subcategories`
+--
+ALTER TABLE `beneficiary_subcategories`
+  MODIFY `subcategory_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `clients`
+--
+ALTER TABLE `clients`
+  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `dswd_assistance`
+--
+ALTER TABLE `dswd_assistance`
+  MODIFY `assistance_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `family_composition`
+--
+ALTER TABLE `family_composition`
+  MODIFY `family_member_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `financial_assistance`
+--
+ALTER TABLE `financial_assistance`
+  MODIFY `fa_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `general_intake`
+--
+ALTER TABLE `general_intake`
+  MODIFY `intake_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `material_assistance`
+--
+ALTER TABLE `material_assistance`
+  MODIFY `ma_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `programs`
+--
+ALTER TABLE `programs`
+  MODIFY `program_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `psychosocial_support`
+--
+ALTER TABLE `psychosocial_support`
+  MODIFY `ps_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `relief_distribution`
+--
+ALTER TABLE `relief_distribution`
+  MODIFY `rd_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `sectors`
+--
+ALTER TABLE `sectors`
+  MODIFY `sector_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `beneficiaries`
+--
+ALTER TABLE `beneficiaries`
+  ADD CONSTRAINT `beneficiaries_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `clients` (`client_id`);
+
+--
+-- Constraints for table `beneficiary_programs`
+--
+ALTER TABLE `beneficiary_programs`
+  ADD CONSTRAINT `beneficiary_programs_ibfk_1` FOREIGN KEY (`beneficiary_id`) REFERENCES `beneficiaries` (`beneficiary_id`),
+  ADD CONSTRAINT `beneficiary_programs_ibfk_2` FOREIGN KEY (`program_id`) REFERENCES `programs` (`program_id`);
+
+--
+-- Constraints for table `beneficiary_sectors`
+--
+ALTER TABLE `beneficiary_sectors`
+  ADD CONSTRAINT `beneficiary_sectors_ibfk_1` FOREIGN KEY (`beneficiary_id`) REFERENCES `beneficiaries` (`beneficiary_id`),
+  ADD CONSTRAINT `fk_sector` FOREIGN KEY (`sector_id`) REFERENCES `sectors` (`sector_id`);
+
+--
+-- Constraints for table `beneficiary_subcategories`
+--
+ALTER TABLE `beneficiary_subcategories`
+  ADD CONSTRAINT `beneficiary_subcategories_ibfk_1` FOREIGN KEY (`beneficiary_id`) REFERENCES `beneficiaries` (`beneficiary_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `dswd_assistance`
+--
+ALTER TABLE `dswd_assistance`
+  ADD CONSTRAINT `dswd_assistance_ibfk_1` FOREIGN KEY (`beneficiary_id`) REFERENCES `beneficiaries` (`beneficiary_id`);
+
+--
+-- Constraints for table `family_composition`
+--
+ALTER TABLE `family_composition`
+  ADD CONSTRAINT `family_composition_ibfk_1` FOREIGN KEY (`beneficiary_id`) REFERENCES `beneficiaries` (`beneficiary_id`);
+
+--
+-- Constraints for table `financial_assistance`
+--
+ALTER TABLE `financial_assistance`
+  ADD CONSTRAINT `financial_assistance_ibfk_1` FOREIGN KEY (`intake_id`) REFERENCES `general_intake` (`intake_id`);
+
+--
+-- Constraints for table `general_intake`
+--
+ALTER TABLE `general_intake`
+  ADD CONSTRAINT `general_intake_ibfk_1` FOREIGN KEY (`beneficiary_id`) REFERENCES `beneficiaries` (`beneficiary_id`);
+
+--
+-- Constraints for table `material_assistance`
+--
+ALTER TABLE `material_assistance`
+  ADD CONSTRAINT `material_assistance_ibfk_1` FOREIGN KEY (`intake_id`) REFERENCES `general_intake` (`intake_id`);
+
+--
+-- Constraints for table `psychosocial_support`
+--
+ALTER TABLE `psychosocial_support`
+  ADD CONSTRAINT `psychosocial_support_ibfk_1` FOREIGN KEY (`intake_id`) REFERENCES `general_intake` (`intake_id`);
+
+--
+-- Constraints for table `relief_distribution`
+--
+ALTER TABLE `relief_distribution`
+  ADD CONSTRAINT `relief_distribution_ibfk_1` FOREIGN KEY (`beneficiary_id`) REFERENCES `beneficiaries` (`beneficiary_id`);
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
