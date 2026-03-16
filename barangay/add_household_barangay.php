@@ -3,13 +3,13 @@ session_start();
 include __DIR__ . '/../config/db.php';
 
 // RBAC: Only Barangay users
-if(!isset($_SESSION['id']) || $_SESSION['role'] !== 'Barangay'){
+if(!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'Barangay'){
     header("Location: ../login.php");
     exit;
 }
 
 // Barangay info from session
-$barangay_id = $_SESSION['barangay_id'] ?? 0;
+$barangay_id = $_SESSION['barangay'] ?? 0;
 $barangay_name = $_SESSION['barangay_name'] ?? '';
 
 if(!$barangay_id) exit("Invalid barangay session.");

@@ -56,7 +56,7 @@ while($scRow = mysqli_fetch_assoc($scResult)){
 <link rel="stylesheet" href="css/bootstrap-icons-1.11.0/bootstrap-icons.css">
 <link rel="stylesheet" href="css/style.css">
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="js/jquery-4.0.0.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 
 <style>

@@ -2,79 +2,48 @@
 session_start();
 include __DIR__ . '/../config/db.php';
 
-// RBAC: Only Barangay users
-if(!isset($_SESSION['id']) || $_SESSION['role'] !== 'Barangay'){
-    header("Location: ../login.php");
+// Check if user is logged in and has Barangay role
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'Barangay') {
+    echo "<tr><td colspan='8' class='text-center'>Access Denied</td></tr>";
     exit;
 }
 
-// Barangay info from session
-$barangay_id = $_SESSION['barangay_id'] ?? 0;
-$barangay_name = $_SESSION['barangay_name'] ?? '';
-if(!$barangay_id) exit("Invalid barangay session.");
+// Get beneficiary_id from request
+$beneficiary_id = isset($_GET['beneficiary_id']) ? intval($_GET['beneficiary_id']) : 0;
 
-// Check household ID
-$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-if(!$id) header("Location: barangay_households.php");
+// Optional: get Barangay of logged-in user to restrict access
+$barangay_user = $_SESSION['barangay'] ?? '';
 
-// Fetch household
-$stmt = $conn->prepare("SELECT * FROM households WHERE id=? AND barangay_id=?");
-$stmt->bind_param("ii", $id, $barangay_id);
-$stmt->execute();
-$household = $stmt->get_result()->fetch_assoc();
-$stmt->close();
-if(!$household) die("Household not found or access denied.");
+// Fetch beneficiary info
+$sql = "SELECT * FROM beneficiaries WHERE beneficiary_id = ?";
+$params = [$beneficiary_id];
 
-// Fetch members
-$stmt = $conn->prepare("SELECT * FROM household_members WHERE household_id=? ORDER BY id ASC");
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$members_result = $stmt->get_result();
-$stmt->close();
-
-if(isset($_POST['update'])){
-    $head = trim($_POST['household_head']);
-    $income = (float)($_POST['income'] ?? 0);
-    $family_size = (int)($_POST['family_size'] ?? 0);
-
-    // Update household
-    $stmt = $conn->prepare("UPDATE households SET household_head=?, income=?, family_size=? WHERE id=? AND barangay_id=?");
-    $stmt->bind_param("siiii", $head, $income, $family_size, $id, $barangay_id);
-    $stmt->execute();
-    $stmt->close();
-
-    // Delete old members
-    $stmt = $conn->prepare("DELETE FROM household_members WHERE household_id=?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $stmt->close();
-
-    // Insert new members
-    if(!empty($_POST['member_name'])){
-        $stmt_member = $conn->prepare("INSERT INTO household_members (household_id, full_name, age, sex, occupation, income, pwd) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $names = $_POST['member_name'];
-        $ages = $_POST['member_age'];
-        $sexes = $_POST['member_sex'];
-        $occupations = $_POST['member_occupation'];
-        $incomes = $_POST['member_income'];
-        $pwds = $_POST['member_pwd'] ?? [];
-
-        foreach($names as $index => $name){
-            $age = (int)($ages[$index] ?? 0);
-            $sex = $sexes[$index] ?? 'Male';
-            $occupation = $occupations[$index] ?? '';
-            $member_income = (float)($incomes[$index] ?? 0);
-            $is_pwd = in_array($index+1, $pwds) ? 1 : 0;
-
-            $stmt_member->bind_param("isissdi", $id, $name, $age, $sex, $occupation, $member_income, $is_pwd);
-            $stmt_member->execute();
-        }
-        $stmt_member->close();
-    }
-
-    header("Location: barangay_households.php");
-    exit();
+if ($barangay_user) {
+    $sql .= " AND barangay = ?";
+    $params[] = $barangay_user;
 }
+
+$stmt = $conn->prepare($sql);
+if ($barangay_user) {
+    $stmt->bind_param("is", $beneficiary_id, $barangay_user);
+} else {
+    $stmt->bind_param("i", $beneficiary_id);
+}
+$stmt->execute();
+$result = $stmt->get_result();
+$household = $result->fetch_assoc();
+
+if (!$household) {
+    echo "<tr><td colspan='8' class='text-center'>No household details found</td></tr>";
+    exit;
+}
+
+// Fetch family members
+$sql_members = "SELECT * FROM family_composition WHERE beneficiary_id = ?";
+$stmt_members = $conn->prepare($sql_members);
+$stmt_members->bind_param("i", $beneficiary_id);
+$stmt_members->execute();
+$members_result = $stmt_members->get_result();
 ?>
 
 <!DOCTYPE html>

@@ -5,5 +5,5 @@
 <div class="sidebar">
     <h4 class="p-2">APSystem</h4>
     <a href="barangay_households.php"><i class="bi bi-people"></i> Households</a>
-    <a href="add_household_barangay.php"><i class="bi bi-person-plus"></i> Add Household</a>
+    <a href="add_beneficiary_barangay.php"><i class="bi bi-person-plus"></i> Add Household</a>
 </div>

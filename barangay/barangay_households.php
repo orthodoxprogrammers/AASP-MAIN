@@ -67,7 +67,7 @@ $user_barangay = $_SESSION['barangay'] ?? '';
         <div class="d-flex justify-content-between align-items-center mb-2">
             <h4><?= htmlspecialchars($user_barangay) ?> Households</h4>
             <div>
-                <a href="add_household_barangay.php" class="btn btn-primary btn-sm">
+                <a href="add_beneficiary_barangay.php" class="btn btn-primary btn-sm">
                     <i class="bi bi-person-plus"></i> Add Household
                 </a>
                 <button id="btnPrint" class="btn btn-secondary btn-sm">

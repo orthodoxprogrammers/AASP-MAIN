@@ -88,14 +88,14 @@ $result = $stmt->get_result();
 <tbody>
 <?php if ($result->num_rows > 0): ?>
     <?php while ($row = $result->fetch_assoc()): ?>
-    <tr class="household-row" style="cursor:pointer;" onclick="window.location='view_household.php?id=<?= $row['beneficiary_id'] ?>'">
+    <tr class="household-row" style="cursor:pointer;" onclick="window.location='view_beneficiary_barangay.php?id=<?= $row['beneficiary_id'] ?>'">
         <td><?= $row['beneficiary_id'] ?></td>
         <td><?= htmlspecialchars($row['last_name']) ?></td>
         <td><?= htmlspecialchars($row['first_name']) ?></td>
         <td>₱<?= number_format($row['monthly_income'], 2) ?></td>
         <td><?= $row['dependents_count'] ?></td>
         <td onclick="event.stopPropagation();">
-            <a href="edit_household_barangay.php?id=<?= $row['beneficiary_id'] ?>" class="btn btn-warning btn-sm">
+            <a href="edit_beneficiaries_barangay.php?id=<?= $row['beneficiary_id'] ?>" class="btn btn-warning btn-sm">
                 <i class="bi bi-pencil"></i>
             </a>
         </td>

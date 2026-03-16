@@ -2,12 +2,11 @@
 session_start();
 include 'config/db.php';
 
-// RBAC: Only MSWDO can access
-/*if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'MSWDO') {
-    header("Location: login.php");
+/* RBAC: Only MSWDO can access this page */
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'MSWDO') {
+    echo "<tr><td colspan='8' class='text-center'>Access Denied</td></tr>";
     exit();
 }
-*/
 
 // Total beneficiaries
 $totalResult = mysqli_query($conn,"SELECT COUNT(*) AS total FROM beneficiaries");
