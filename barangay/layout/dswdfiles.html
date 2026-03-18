@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DSWD Forms - Complete Set</title>
+<style>
+  /* ── SCREEN ── */
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    margin: 0;
+    padding: 10px;
+    background: #f0f0f0;
+    color: #000;
+  }
+
+  /* Each form is one A4 page */
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    border: 1px solid black;
+    padding: 8mm;
+    box-sizing: border-box;
+    background: white;
+    margin: 0 auto 20px auto;
+    page-break-after: always;
+  }
+  .page:last-child {
+    page-break-after: avoid;
+  }
+
+  /* ── SHARED STYLES ── */
+  .header-flex { display: flex; justify-content: space-between; align-items: center; }
+  .logo-group { display: flex; gap: 10px; align-items: center; }
+  .logo-group img { width: 40px; height: auto; }
+
+  h3 { text-align: center; margin-top: 2px; margin-bottom: 4px; font-size: 13px; }
+
+  label { user-select: none; }
+
+  input[type="text"], input[type="number"] {
+    font-size: 10px; padding: 1px 3px; box-sizing: border-box;
+    border: 1px solid black; background: white;
+  }
+  input[type="checkbox"], input[type="radio"] {
+    transform: scale(1.1); margin-right: 4px; vertical-align: middle;
+  }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 2px; }
+  th, td { border: 1px solid black; padding: 2px 4px; vertical-align: middle; font-size: 10px; }
+  th { background: #ccc; font-weight: bold; font-size: 10px; text-align: center; }
+  td input[type="text"] { width: 100%; border: none; height: 16px; font-size: 10px; background: transparent; }
+
+  .section-title {
+    background: #999; color: white; padding: 4px 5px;
+    font-weight: bold; font-size: 11px;
+  }
+  .section-subtitle { font-style: italic; font-weight: normal; font-size: 10px; }
+
+  .col-header {
+    background: #ccc; font-weight: bold; font-size: 10px;
+    text-align: center; padding: 2px 4px; border: 1px solid black; vertical-align: middle;
+  }
+
+  .cb { display: block; margin: 0; cursor: pointer; user-select: none; font-size: 10px; line-height: 1.4; }
+  .cb-inline { display: inline-flex; align-items: center; margin-right: 10px; font-size: 10px; line-height: 1.6; }
+  .cb input, .cb-inline input { margin-right: 3px; flex-shrink: 0; }
+
+  .ul-input {
+    border: none; border-bottom: 1px solid black;
+    font-size: 10px; background: transparent; padding: 0 2px; display: inline-block;
+  }
+  .line-input {
+    display: inline-block; border-bottom: 1px solid #000;
+    width: 110px; height: 13px; margin-left: 4px; vertical-align: bottom;
+  }
+
+  .section-block { border: 1px solid black; border-top: none; padding: 4px 6px; }
+
+  .footer-text {
+    font-size: 9px; margin-top: 6px; text-align: center;
+    border-top: 1px solid #999; padding-top: 3px;
+    page-break-inside: avoid; break-inside: avoid;
+  }
+
+  /* ── PAGE 1: Information Sheet specific ── */
+  .pcn-box input[type="text"] { width: 18px; margin-right: 2px; text-align: center; border: 1px solid black; }
+  .consent-text { font-size: 9.5px; margin-top: 3px; margin-bottom: 3px; text-align: justify; line-height: 1.3; }
+  .consent-section { page-break-inside: avoid; break-inside: avoid; }
+  .signature-container { display: flex; justify-content: space-between; margin-top: 16px; align-items: flex-end; }
+  .signature-box { width: calc(100% - 75px); }
+  .sig-line-top { border-top: 1px solid black; margin-bottom: 3px; height: 0; }
+  .sig-label { font-size: 9px; text-align: center; }
+  .thumbmark-box {
+    width: 58px; height: 58px; border: 1px solid black;
+    font-size: 9px; font-style: italic; text-align: center; line-height: 58px; user-select: none;
+  }
+  .assistance-checkboxes { display: flex; gap: 12px; }
+  .assistance-checkboxes label { font-weight: normal; }
+  .assistance-table th, .assistance-table td { border: 1px solid black; padding: 2px 4px; font-size: 10px; }
+  .assistance-table input[type="text"] { border: none; width: 100%; height: 18px; font-size: 10px; padding: 1px 2px; }
+  td.is-input input[type="text"] { border: 1px solid black; height: 18px; }
+
+  /* ── PAGE 3: Sections VII-XI specific ── */
+  table.fixed-layout { table-layout: fixed; }
+  .vertical-text {
+    writing-mode: vertical-rl; transform: rotate(180deg);
+    text-align: center; font-weight: bold; font-size: 10px;
+    padding: 0 4px; width: 20px; vertical-align: middle;
+    background: #eee; border: 1px solid black;
+  }
+  .purpose-input { width: 92%; border: none; border-bottom: 1px solid black; font-size: 10px; margin: 2px 0; background: transparent; }
+  .signature-cell { text-align: center; font-size: 10px; vertical-align: bottom; height: 85px; padding: 3px; }
+  hr.sig-hr { border: none; border-top: 1px solid black; width: 80%; margin: 28px auto 3px auto; }
+
+  /* ── PAGE 4: Certificate of Eligibility specific ── */
+  .pcn-box-coe input[type="text"] {
+    width: 14px; height: 16px; padding: 0; margin: 0 1px;
+    font-size: 9px; text-align: center; border: 1px solid black;
+    box-sizing: border-box; display: inline-block;
+  }
+  .box-container { display: flex; gap: 6px; margin-top: 4px; }
+  .box { border: 1px solid black; padding: 5px 7px; flex: 1; font-size: 10px; }
+  .box-title {
+    background: #ccc; font-weight: bold; font-size: 10px;
+    padding: 2px 4px; border: 1px solid black; margin: -5px -7px 5px -7px;
+  }
+  .box p { margin: 3px 0; font-size: 10px; }
+  .acknowledgment {
+    background: #999; color: white; padding: 4px 5px;
+    font-weight: bold; font-size: 11px; text-align: center; margin-top: 6px;
+  }
+  .sig-section { display: flex; justify-content: space-between; margin-top: 8px; }
+  .sig-block { width: 45%; text-align: center; font-size: 10px; }
+  .sig-block-center { width: 280px; text-align: center; font-size: 10px; margin: 8px auto 0 auto; }
+  .sig-line-bottom { border-bottom: 1px solid black; margin-bottom: 2px; min-height: 22px; }
+
+  /* ── PRINT ── */
+  @media print {
+    @page { size: A4 portrait; margin: 8mm; }
+    html, body { margin: 0; padding: 0; background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page { width: 100%; min-height: unset; border: none; padding: 0; margin: 0; box-shadow: none; }
+    .section-title, .acknowledgment {
+      background: #999 !important; color: white !important;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+    th, .col-header, .box-title {
+      background: #ccc !important;
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+    .vertical-text { background: #eee !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    a[href]:after { content: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════
+     PAGE 1 — INFORMATION SHEET
+     ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="header-flex">
+    <div class="logo-group">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Seal_of_the_Department_of_Social_Welfare_and_Development.svg/120px-Seal_of_the_Department_of_Social_Welfare_and_Development.svg.png" alt="DSWD Logo" />
+      <div><div><strong>DSWD</strong></div><div style="font-size:9px;">Department of Social Welfare and Development</div></div>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Social_Welfare_Seal_of_the_Philippines.svg/120px-Social_Welfare_Seal_of_the_Philippines.svg.png" alt="Social Welfare Logo" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Bayanihan_Pilipinas_seal.svg/120px-Bayanihan_Pilipinas_seal.svg.png" alt="Bayanihan Pilipinas" />
+    </div>
+    <div>
+      <div><input type="checkbox" /> <label># Central Office</label></div>
+      <div><input type="checkbox" /> <label># Field Office I</label></div>
+    </div>
+  </div>
+
+  <h3>INFORMATION SHEET</h3>
+
+  <div style="margin-bottom:4px;">
+    <label>PCN:</label>
+    <span class="pcn-box">
+      <input type="text" maxlength="1" /><input type="text" maxlength="1" /><input type="text" maxlength="1" /><input type="text" maxlength="1" />
+      <input type="text" maxlength="1" /><input type="text" maxlength="1" /><input type="text" maxlength="1" /><input type="text" maxlength="1" />
+      <input type="text" maxlength="1" /><input type="text" maxlength="1" /><input type="text" maxlength="1" /><input type="text" maxlength="1" />
+    </span>
+    <span style="float:right;">
+      Date: <input type="text" maxlength="2" style="width:22px;" /> / <input type="text" maxlength="2" style="width:22px;" /> / <input type="text" maxlength="4" value="2025" readonly style="width:32px;" />
+    </span>
+  </div>
+
+  <!-- Client Info -->
+  <div class="section-title">IMPORMASYON NG KINATAWAN/KLIENTE <span class="section-subtitle">(Authorized Representative / Client's Identifying Information)</span></div>
+  <table><thead><tr><th>Apelyido<br/>(Last Name)</th><th>Unang Pangalan<br/>(First Name)</th><th>Gitnang Pangalan<br/>(Middle Name)</th><th style="width:38px;">Ext.<br/>(Jr./Sr.)</th></tr></thead>
+  <tbody><tr><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" style="text-align:center;" /></td></tr></tbody></table>
+
+  <table><thead><tr><th>Numero ng Bahay/Kalye<br/><small>(Street Address)</small></th><th>Barangay</th><th>Lungsod/Bayan<br/><small>(City/Municipality)</small></th><th style="width:52px;">ILOCOS SUR</th><th>Lalawigan/Distrito<br/><small>(Province/District)</small></th><th>Rehiyon<br/><small>(Region)</small></th></tr></thead>
+  <tbody><tr><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" /></td><td style="text-align:center;">I</td><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" /></td></tr></tbody></table>
+
+  <table><thead><tr><th>Numero ng Mobile<br/><small>(Mobile No.)</small></th><th>Petsa ng Kapanganakan<br/><small>(Birthdate MM-DD-YYYY)</small></th><th style="width:28px;">Edad<br/><small>(Age)</small></th><th style="width:36px;">Kasarian<br/><small>(Sex)</small></th><th style="width:46px;">Katayuang Sibil<br/><small>(Civil Status)</small></th><th>Hanapbuhay<br/><small>(Occupation)</small></th><th>Buwanang Kita<br/><small>(Monthly Income)</small></th></tr></thead>
+  <tbody><tr><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" style="text-align:center;" /></td><td class="is-input"><input type="text" style="text-align:center;" /></td><td class="is-input"><input type="text" style="text-align:center;" /></td><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" /></td></tr></tbody></table>
+
+  <table><thead><tr><th colspan="7" style="text-align:left;">Relasyon sa Benepisyaryo<br/><small>(Relationship to the Beneficiary)</small></th></tr></thead>
+  <tbody><tr><td colspan="7" class="is-input"><input type="text" style="width:100%;" /></td></tr></tbody></table>
+
+  <!-- Beneficiary Info -->
+  <div style="margin-top:4px;">
+    <div class="section-title">IMPORMASYON NG BENEPISYARYO <span class="section-subtitle">(Beneficiary's Identifying Information)</span>
+      <label style="float:right; font-weight:normal; font-size:10px;"><input type="checkbox" checked disabled /> KATULAD NG NASA ITAAS</label>
+    </div>
+    <table><thead><tr><th>Apelyido<br/>(Last Name)</th><th>Unang Pangalan<br/>(First Name)</th><th>Gitnang Pangalan<br/>(Middle Name)</th><th style="width:38px;">Ext.<br/>(Jr./Sr.)</th></tr></thead>
+    <tbody><tr><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" style="text-align:center;" /></td></tr></tbody></table>
+
+    <table><thead><tr><th>Numero ng Bahay/Kalye<br/><small>(Street Address)</small></th><th>Barangay</th><th>Lungsod/Bayan<br/><small>(City/Municipality)</small></th><th style="width:52px;">ILOCOS SUR</th><th>Lalawigan/Distrito<br/><small>(Province/District)</small></th><th>Rehiyon<br/><small>(Region)</small></th></tr></thead>
+    <tbody><tr><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" /></td><td style="text-align:center;">I</td><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" /></td></tr></tbody></table>
+
+    <table><thead><tr><th>Numero ng Mobile<br/><small>(Mobile No.)</small></th><th>Petsa ng Kapanganakan<br/><small>(Birthdate MM-DD-YYYY)</small></th><th style="width:28px;">Edad<br/><small>(Age)</small></th><th style="width:36px;">Kasarian<br/><small>(Sex)</small></th><th style="width:46px;">Katayuang Sibil<br/><small>(Civil Status)</small></th><th>Hanapbuhay<br/><small>(Occupation)</small></th><th>Buwanang Kita<br/><small>(Monthly Income)</small></th></tr></thead>
+    <tbody><tr><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" style="text-align:center;" /></td><td class="is-input"><input type="text" style="text-align:center;" /></td><td class="is-input"><input type="text" style="text-align:center;" /></td><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" /></td></tr></tbody></table>
+
+    <table style="margin-top:3px;"><tbody><tr>
+      <td style="width:30%;">Nakatanggap ba kayo ng tulong mula sa DSWD?<br/><small>(Have you received any assistance from the DSWD?)</small></td>
+      <td style="width:15%;"><div class="assistance-checkboxes"><label><input type="checkbox" /> Hindi</label><label><input type="checkbox" /> Oo</label></div></td>
+      <td style="width:55%;">
+        <table class="assistance-table"><thead><tr><th>Natanggap na tulong sa DSWD<br/><small>(Assistance received from DSWD)</small></th><th>Petsa ng tulong<br/><small>(Date of assistance received)</small></th></tr></thead>
+        <tbody><tr><td><input type="text" /></td><td><input type="text" /></td></tr><tr><td><input type="text" /></td><td><input type="text" /></td></tr><tr><td><input type="text" /></td><td><input type="text" /></td></tr><tr><td><input type="text" /></td><td><input type="text" /></td></tr><tr><td><input type="text" /></td><td><input type="text" /></td></tr></tbody></table>
+      </td>
+    </tr></tbody></table>
+  </div>
+
+  <!-- Family Composition -->
+  <div style="margin-top:4px;">
+    <div class="section-title">KOMPOSISYON NG PAMILYA <span class="section-subtitle">(Family Composition)</span></div>
+    <table><thead><tr><th>Buong Pangalan<br/><small>(Full Name)</small></th><th>Relasyon sa Benepisyaryo<br/><small>(Relationship to the Beneficiary)</small></th><th style="width:42px;">Edad<br/><small>(Age)</small></th><th>Hanapbuhay<br/><small>(Occupation)</small></th><th>Buwanang Kita<br/><small>(Monthly Income)</small></th></tr></thead>
+    <tbody>
+      <tr><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" style="text-align:center;" /></td><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" /></td></tr>
+      <tr><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" style="text-align:center;" /></td><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" /></td></tr>
+      <tr><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" style="text-align:center;" /></td><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" /></td></tr>
+      <tr><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" style="text-align:center;" /></td><td class="is-input"><input type="text" /></td><td class="is-input"><input type="text" /></td></tr>
+    </tbody></table>
+  </div>
+
+  <!-- Consent -->
+  <div class="consent-section" style="margin-top:4px;">
+    <div class="section-title">DEKLARASYON NG PAHINTULOT <span class="section-subtitle">(Consent Form)</span></div>
+    <p class="consent-text">Ako ay nagdedeklara sa ilalim ng parusa ng pagsisinungaling (perjury), na ang lahat ng impormasyon sa aplikasyon na ito ay totoo at tama batay sa aking personal na kaalaman at mga autetikong rekord na iasinumite sa Department of Social Welfare and Development (DSWD). Anumang mali o mapanlinlang na impormasyon na ibinigay, o paggawa ng pekeng/pinagwaglit na mga dokumento ay magiging sanhi ng nararapat na hakbang na legal laban sa akin at awtomatikong magpapawalang-bisa sa anumang tulong na ibibigay kaugnay ng aplikasyon na ito.</p>
+    <p class="consent-text">Ako ay sumasang-ayon na ang lahat ng personal na datos (ayon sa depinisyon sa ilalim ng Republic Act 10173 o Data Privacy Law ng 2012 at mga patnubay nito) at impormasyon o mga rekord ng mga transaksyon sa account sa DSWD ay maaaring iproseso, iprofile, o ibahagi sa mga humihiling na partido o para sa layunin ng anumang hukuman, proseso ng batas, pagsisuri, inquiry, audit, o imbestigasyon ng anumang awtoridad.</p>
+    <div class="signature-container" style="margin-top:10px;">
+      <div class="signature-box"><div class="sig-line-top"></div><div class="sig-label">Lagda sa ibaba ng Buong Pangalan ng Kinatawan/Kliyente<br/><small>(Signature over Printed Name of the Authorized Representative/Client)</small></div></div>
+      <div class="thumbmark-box">Thumbmark</div>
+    </div>
+  </div>
+
+  <div class="footer-text">PAGE 1 of 4<br/>DSWD Field Office 1, Quezon Avenue, City of San Fernando, La Union, Philippines 2500<br/>Website: fo1.dswd.gov.ph &nbsp; Tel Nos.: (072)687-8000 &nbsp; Telefax: (072)888-2184</div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     PAGE 2 — GENERAL INTAKE SHEET
+     ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="header-flex">
+    <div class="logo-group">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Seal_of_the_Department_of_Social_Welfare_and_Development.svg/120px-Seal_of_the_Department_of_Social_Welfare_and_Development.svg.png" alt="DSWD Logo" />
+      <div><div><strong>DSWD</strong></div><div style="font-size:9px;">Department of Social Welfare and Development</div></div>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Social_Welfare_Seal_of_the_Philippines.svg/120px-Social_Welfare_Seal_of_the_Philippines.svg.png" alt="Social Welfare Logo" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Bayanihan_Pilipinas_seal.svg/120px-Bayanihan_Pilipinas_seal.svg.png" alt="Bayanihan Pilipinas" />
+    </div>
+    <div style="font-size:10px; border:1px solid black; padding:4px 8px; line-height:1.9;">
+      <div><label class="cb-inline"><input type="checkbox" /> AICS</label><label class="cb-inline"><input type="checkbox" /> AKAP</label><label class="cb-inline"><input type="checkbox" /> Others</label></div>
+      <div><label class="cb-inline"><input type="radio" name="nr2" /> New</label><label class="cb-inline"><input type="radio" name="nr2" /> Returning</label></div>
+    </div>
+  </div>
+
+  <h3>GENERAL INTAKE SHEET</h3>
+
+  <table style="margin-top:0;"><thead><tr><th>Mode</th><th>Type</th><th style="width:34%;">Date (MM / DD / YYYY)</th></tr></thead>
+  <tbody><tr>
+    <td><label class="cb-inline"><input type="checkbox" /> Onsite</label><label class="cb-inline"><input type="checkbox" /> Malasakit Center</label><label class="cb-inline"><input type="checkbox" /> Offsite</label></td>
+    <td><label class="cb-inline"><input type="radio" name="wr2" /> Walk-in</label><label class="cb-inline"><input type="radio" name="wr2" /> Referral</label></td>
+    <td style="text-align:center;"><input type="text" maxlength="2" style="width:26px; text-align:center;" /> / <input type="text" maxlength="2" style="width:26px; text-align:center;" /> / <input type="text" maxlength="4" value="2025" style="width:40px; text-align:center;" /></td>
+  </tr></tbody></table>
+
+  <div style="margin-top:5px;">
+    <div class="section-title">CLIENT'S NAME</div>
+    <table><thead><tr><th>Last Name<br/><small>(Apelyido)</small></th><th>First Name<br/><small>(Unang Pangalan)</small></th><th>Middle Name<br/><small>(Gitnang Pangalan)</small></th><th style="width:44px;">Ext.<br/>(Jr./Sr.)</th></tr></thead>
+    <tbody><tr><td><input type="text" /></td><td><input type="text" /></td><td><input type="text" /></td><td><input type="text" style="text-align:center;" /></td></tr></tbody></table>
+  </div>
+
+  <div style="margin-top:4px;">
+    <div class="section-title">BENEFICIARY'S NAME <label style="float:right; font-weight:normal; font-size:10px;"><input type="checkbox" style="transform:scale(1.1); margin-right:4px;" /> SAME AS ABOVE</label></div>
+    <table><thead><tr><th>Last Name<br/><small>(Apelyido)</small></th><th>First Name<br/><small>(Unang Pangalan)</small></th><th>Middle Name<br/><small>(Gitnang Pangalan)</small></th><th style="width:44px;">Ext.<br/>(Jr./Sr.)</th></tr></thead>
+    <tbody><tr><td><input type="text" /></td><td><input type="text" /></td><td><input type="text" /></td><td><input type="text" style="text-align:center;" /></td></tr></tbody></table>
+  </div>
+
+  <table style="margin-top:4px;"><thead><tr><th style="text-align:left;">Purpose of Assistance</th><th style="text-align:left;">Diagnosis / Cause of Death <small style="font-weight:normal; font-style:italic;">(if funeral)</small></th></tr></thead>
+  <tbody><tr><td><input type="text" /></td><td><input type="text" /></td></tr></tbody></table>
+
+  <table style="margin-top:3px;"><thead><tr><th style="text-align:left;">Mode of Assistance</th><th style="text-align:left; width:30%;">Amount Needed</th></tr></thead>
+  <tbody><tr>
+    <td><label class="cb-inline"><input type="checkbox" /> Outright Cash</label><label class="cb-inline"><input type="checkbox" /> Guarantee Letter</label><label class="cb-inline"><input type="checkbox" /> Material Assistance</label><label class="cb-inline"><input type="checkbox" /> Psychosocial Support</label><label class="cb-inline"><input type="checkbox" /> Referral Service</label></td>
+    <td><strong style="font-size:10px;">PhP&nbsp;</strong><input type="text" style="width:110px; border:none; border-bottom:1.5px solid #000; font-weight:bold; font-size:10px; text-align:right; background:transparent;" value=",000.00" /></td>
+  </tr></tbody></table>
+
+  <div style="margin-top:4px;">
+    <div class="section-title">I. &nbsp;INCOME AND FINANCIAL RESOURCES</div>
+    <div class="section-block">
+      <div style="font-weight:bold; font-size:10px; margin-bottom:2px;">Occupation/s of family member</div>
+      <div><label class="cb-inline"><input type="checkbox" /> Employed</label><span style="font-style:italic; font-size:9.5px;">(indicate number of members working)&nbsp;<input type="text" class="ul-input" style="width:90px;" /></span></div>
+      <div><label class="cb-inline"><input type="checkbox" /> Seasonal Employee</label><span style="font-style:italic; font-size:9.5px;">(indicate number of members working)&nbsp;<input type="text" class="ul-input" style="width:90px;" /></span></div>
+      <div><label class="cb-inline"><input type="checkbox" /> Combined family income&nbsp;</label><input type="text" class="ul-input" style="width:140px;" /></div>
+      <div style="margin-top:2px;"><label class="cb-inline"><input type="checkbox" /> Insurance coverage</label><label class="cb-inline"><input type="checkbox" /> Savings</label></div>
+    </div>
+  </div>
+
+  <div style="margin-top:4px;">
+    <div class="section-title">II. &nbsp;BUDGET AND EXPENSES</div>
+    <div class="section-block">
+      <label class="cb-inline"><input type="checkbox" /> Monthly expenses of the family</label>
+      <div style="font-style:italic; font-size:9.5px; margin-left:18px; margin-bottom:2px;">(Utility bills, Maintenance and Medication, Mortgage/Rent, Debt, and Others)</div>
+      <label class="cb-inline"><input type="checkbox" /> Availability of emergency fund</label>
+    </div>
+  </div>
+
+  <div style="margin-top:4px;">
+    <div class="section-title">III. &nbsp;SEVERITY OF THE CRISIS</div>
+    <div class="section-block">
+      <div style="font-weight:bold; font-size:10px; margin-bottom:2px;">How long does the patient suffer from the disease?</div>
+      <label class="cb-inline"><input type="checkbox" /> Recently diagnosed (3mos &amp; below)</label>
+      <label class="cb-inline"><input type="checkbox" /> 3 months to a year</label>
+      <label class="cb-inline"><input type="checkbox" /> Chronic or lifelong</label>
+      <label class="cb-inline"><input type="checkbox" /> Not applicable</label>
+      <div style="font-weight:bold; font-size:10px; margin-top:3px; margin-bottom:2px;">In the past three (3) months, did the family experience at least one crisis?</div>
+      <label class="cb-inline"><input type="checkbox" /> YES</label><label class="cb-inline"><input type="checkbox" /> NO</label>
+      <div style="font-weight:bold; font-size:10px; margin-top:3px; margin-bottom:2px;">If yes, which among the following crises did the family experience (check all that apply):</div>
+      <label class="cb-inline"><input type="checkbox" /> Hospitalization</label>
+      <label class="cb-inline"><input type="checkbox" /> Death of a family member</label>
+      <label class="cb-inline"><input type="checkbox" /> Catastrophic Event (fire, earthquake, flooding, etc.)</label>
+      <label class="cb-inline"><input type="checkbox" /> Disablement</label>
+      <label class="cb-inline"><input type="checkbox" /> Loss of Livelihood</label>
+      <label class="cb-inline"><input type="checkbox" /> Others, specify <span class="line-input"></span></label>
+    </div>
+  </div>
+
+  <div style="margin-top:4px;">
+    <div class="section-title">IV. &nbsp;AVAILABILITY OF SUPPORT SYSTEMS</div>
+    <div class="section-block">
+      <label class="cb-inline"><input type="checkbox" /> Family</label><label class="cb-inline"><input type="checkbox" /> Relatives</label><label class="cb-inline"><input type="checkbox" /> Friend/s</label><label class="cb-inline"><input type="checkbox" /> Employer</label><label class="cb-inline"><input type="checkbox" /> Church/Community Organization</label>
+    </div>
+  </div>
+
+  <div style="margin-top:4px;">
+    <div class="section-title">V. &nbsp;EXTERNAL RESOURCES TAPPED BY THE FAMILY</div>
+    <div class="section-block">
+      <label class="cb-inline"><input type="checkbox" /> Philhealth</label><label class="cb-inline"><input type="checkbox" /> Health Card</label><label class="cb-inline"><input type="checkbox" /> Guarantee Letter from other agencies</label><label class="cb-inline"><input type="checkbox" /> MSS Discount</label><label class="cb-inline"><input type="checkbox" /> Senior Citizen Discount</label><label class="cb-inline"><input type="checkbox" /> PWD Discount</label>
+      <label class="cb-inline"><input type="checkbox" /> Others, specify <span class="line-input"></span></label>
+      <label class="cb-inline"><input type="checkbox" /> Not applicable</label>
+    </div>
+  </div>
+
+  <div style="margin-top:4px;">
+    <div class="section-title">VI. &nbsp;SELF HELP AND CLIENT EFFORTS</div>
+    <div class="section-block">
+      <label class="cb-inline"><input type="checkbox" /> Successfully sought employment opportunities or explored additional income sources</label>
+      <label class="cb-inline"><input type="checkbox" /> Successfully reached out to relevant organization</label>
+    </div>
+  </div>
+
+  <div style="margin-top:4px;">
+    <div class="section-title">VII. &nbsp;VULNERABILITY AND RISK FACTORS</div>
+    <div class="section-block">
+      <label class="cb-inline"><input type="checkbox" /> There are elderly / Child in need / PWD / Pregnant in the household</label>
+      <label class="cb-inline"><input type="checkbox" /> A member is physically or mentally incapacitated to work</label>
+      <label class="cb-inline"><input type="checkbox" /> Inability to secure stable employment</label>
+    </div>
+  </div>
+
+  <div class="footer-text">PAGE 2 of 4<br/>DSWD Field Office 1, Quezon Avenue, City of San Fernando, La Union, Philippines 2500<br/>Website: fo1.dswd.gov.ph &nbsp; Tel Nos.: (072)607-6000 &nbsp; Telefax: (072)888-2184</div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     PAGE 3 — GENERAL INTAKE SHEET (Continuation)
+     ════════════════════════════════════════════════ -->
+<div class="page">
+  <div style="font-size:9px; color:#555; margin-bottom:4px; text-align:right; font-style:italic;">General Intake Sheet — Continuation</div>
+
+  <!-- VII -->
+  <div class="section-title">VII. CLIENT SECTOR</div>
+  <table class="fixed-layout"><tbody><tr>
+    <td style="width:30%; vertical-align:top;">
+      <label class="cb"><input type="checkbox" /> PHONA</label><label class="cb"><input type="checkbox" /> WEDC</label><label class="cb"><input type="checkbox" /> DSWD</label><label class="cb"><input type="checkbox" /> DPA</label><label class="cb"><input type="checkbox" /> CNSP</label><label class="cb"><input type="checkbox" /> SC</label><label class="cb"><input type="checkbox" /> NSNP</label><label class="cb"><input type="checkbox" /> PLHV</label>
+    </td>
+    <td style="width:28%; vertical-align:top;">
+      <label class="cb"><input type="checkbox" /> Recovering Person Who Used Drugs</label>
+      <label class="cb"><input type="checkbox" /> Minimum Wage Earner</label>
+      <label class="cb" style="display:flex; align-items:center; flex-wrap:wrap;"><input type="checkbox" style="flex-shrink:0;" /> Below Minimum Wage &nbsp;<input type="text" style="width:60px;" placeholder="approx. monthly" /> Php</label>
+      <label class="cb" style="display:flex; align-items:center; flex-wrap:wrap;"><input type="checkbox" style="flex-shrink:0;" /> Earning (specify approx. monthly) &nbsp;<input type="text" style="width:55px;" placeholder="Php" /></label>
+    </td>
+    <td style="width:2%; padding:0;" class="vertical-text">Specify Sub-Category:</td>
+    <td style="width:20%; vertical-align:top;">
+      <label class="cb"><input type="checkbox" /> Solo Parent</label><label class="cb"><input type="checkbox" /> Indigenous People</label><label class="cb"><input type="checkbox" /> Street Dwellers</label><label class="cb"><input type="checkbox" /> KIA/KWA</label><label class="cb"><input type="checkbox" /> 4PS Beneficiary</label><label class="cb"><input type="checkbox" /> Stateless Person</label><label class="cb"><input type="checkbox" /> Asylum Seekers</label><label class="cb"><input type="checkbox" /> Refugees</label>
+    </td>
+    <td style="width:20%; vertical-align:top; border-left:1px solid black;">
+      <div class="col-header" style="margin:-2px -5px 3px -5px;">Type of Disability</div>
+      <label class="cb"><input type="checkbox" /> Mental Disability</label><label class="cb"><input type="checkbox" /> Visual Disability</label><label class="cb"><input type="checkbox" /> Intellectual Disability</label><label class="cb"><input type="checkbox" /> Physical Disability</label><label class="cb"><input type="checkbox" /> Rare Disease</label><label class="cb"><input type="checkbox" /> Speech Impairment</label><label class="cb"><input type="checkbox" /> Learning Disability</label><label class="cb"><input type="checkbox" /> Psychosocial Disability</label><label class="cb"><input type="checkbox" /> Deaf/Hard-of-Hearing</label><label class="cb"><input type="checkbox" /> Cancer</label>
+    </td>
+  </tr></tbody></table>
+
+  <!-- VIII -->
+  <div class="section-title" style="margin-top:3px;">VIII. SOURCE OF INCOME AND AMOUNT</div>
+  <table class="fixed-layout"><thead><tr><th class="col-header" style="width:42%;">Source of Income</th><th class="col-header" style="width:28%;">Other</th><th class="col-header" style="width:30%; text-align:right;">Amount (Php)</th></tr></thead>
+  <tbody><tr>
+    <td style="vertical-align:top;">
+      <label class="cb"><input type="checkbox" /> Salaries/Wages from Employment</label><label class="cb"><input type="checkbox" /> Entrepreneurial Income/Profits</label><label class="cb"><input type="checkbox" /> Cash Remittances from domestic source</label><label class="cb"><input type="checkbox" /> Cash assistance from abroad</label><label class="cb"><input type="checkbox" /> Pensioners from the government (e.g., AFP's)</label><label class="cb"><input type="checkbox" /> Transfers</label><label class="cb"><input type="checkbox" /> Other income</label>
+    </td>
+    <td style="vertical-align:top;"><label class="cb"><input type="checkbox" /> No Regular Income</label><div style="margin-top:6px; font-size:10px;">Other Regular Income:</div><input type="text" style="width:95%; margin-top:2px; border:none; border-bottom:1px solid black;" /></td>
+    <td style="vertical-align:top; text-align:right;">
+      <input type="number" step="any" style="width:90px; text-align:right; border:none; border-bottom:1px solid black;" /><br/>
+      <input type="number" step="any" style="width:90px; text-align:right; border:none; border-bottom:1px solid black;" /><br/>
+      <input type="number" step="any" style="width:90px; text-align:right; border:none; border-bottom:1px solid black;" /><br/>
+      <input type="number" step="any" style="width:90px; text-align:right; border:none; border-bottom:1px solid black;" /><br/>
+      <input type="number" step="any" style="width:90px; text-align:right; border:none; border-bottom:1px solid black;" /><br/>
+      <input type="number" step="any" style="width:90px; text-align:right; border:none; border-bottom:1px solid black;" /><br/>
+      <input type="number" step="any" style="width:90px; text-align:right; border:none; border-bottom:1px solid black;" />
+    </td>
+  </tr>
+  <tr><td colspan="2" style="text-align:right; font-weight:bold; font-size:10px; vertical-align:middle;">Total income in the past 6 months</td><td style="text-align:right; font-weight:bold; vertical-align:middle;">Php <input type="number" step="any" style="width:90px; text-align:right; border:none; border-bottom:1px solid black;" /></td></tr>
+  </tbody></table>
+
+  <!-- IX -->
+  <div class="section-title" style="margin-top:3px;">IX. PROBLEM PRESENTED</div>
+  <table class="fixed-layout"><tbody><tr><td style="height:62px; padding:4px; font-size:10px; vertical-align:top;">Herein client was referred by the office to seek financial assistance to defray his/her basic necessities as disclosed that they are unable to find stable source of income.</td></tr></tbody></table>
+
+  <!-- X -->
+  <div class="section-title" style="margin-top:3px;">X. SOCIAL WORKER'S ASSESSMENT</div>
+  <table class="fixed-layout"><tbody><tr><td style="height:75px; padding:4px; font-size:10px; vertical-align:top;">Client belongs to one of the marginalized sector in the community. They derived basic needs through a hand-to-mouth basis in which client disclosed difficulty in coping up with their current situation as they have already exhausted most of their internal and external resources. In view hereof, client is recommended to avail financial assistance.</td></tr></tbody></table>
+
+  <!-- Assistance Types -->
+  <table class="fixed-layout" style="margin-top:3px;"><thead><tr><th class="col-header" style="width:22%;">FINANCIAL ASSISTANCE</th><th class="col-header" style="width:24%;">MATERIAL ASSISTANCE</th><th class="col-header" style="width:20%;">PSYCHOSOCIAL SUPPORT</th><th class="col-header" style="width:34%;">Purpose of Assistance</th></tr></thead>
+  <tbody><tr>
+    <td style="vertical-align:top;"><label class="cb"><input type="checkbox" /> Food Assistance</label><label class="cb"><input type="checkbox" /> Cash Relief Assistance</label><label class="cb"><input type="checkbox" /> Medical</label><label class="cb"><input type="checkbox" /> Funeral</label><label class="cb"><input type="checkbox" /> Transportation</label><label class="cb"><input type="checkbox" /> Educational</label></td>
+    <td style="vertical-align:top;"><label class="cb"><input type="checkbox" /> Family Food Packs</label><label class="cb"><input type="checkbox" /> Other Food Items</label><label class="cb"><input type="checkbox" /> Hygiene &amp; Sleeping Kits</label><label class="cb"><input type="checkbox" /> Assistive Devices &amp; Technologies</label><label class="cb"><input type="checkbox" /> Rice</label></td>
+    <td style="vertical-align:top;"><label class="cb"><input type="checkbox" /> Psychosocial First Aid (PFA)</label><label class="cb"><input type="checkbox" /> Social Work Counseling</label></td>
+    <td style="vertical-align:top; padding-left:8px;">1. <input type="text" class="purpose-input" /><br/>2. <input type="text" class="purpose-input" /><br/>3. <input type="text" class="purpose-input" /></td>
+  </tr></tbody></table>
+
+  <!-- XI -->
+  <div class="section-title" style="margin-top:3px;">XI. DAILY NEEDS</div>
+  <table class="fixed-layout"><thead><tr><th class="col-header" style="width:60%;">Description</th><th class="col-header" style="width:40%; text-align:right; padding-right:10px;">Amount</th></tr></thead>
+  <tbody>
+    <tr><td style="height:44px;"></td><td style="text-align:right; font-weight:bold; padding-right:8px; vertical-align:middle;">Php <input type="text" value=".000.00" style="width:100px; text-align:right; border:none; border-bottom:1px solid black;" /></td></tr>
+    <tr><td colspan="2" style="text-align:center; font-weight:bold; font-size:10px;">Fund Source</td></tr>
+    <tr><td colspan="2" style="text-align:center; font-weight:bold; font-size:10px;">2025</td></tr>
+  </tbody></table>
+
+  <!-- Signatures -->
+  <table class="fixed-layout" style="margin-top:3px;"><tbody><tr>
+    <td class="signature-cell" style="width:33%;">Reviewed &amp; Approved by:<br/><hr class="sig-hr"/>Approving Authority<br/><small>(Signature over Printed Name)</small></td>
+    <td class="signature-cell" style="width:33%;">Interviewed by:<br/><hr class="sig-hr"/>Social Worker<br/><small>(Signature over Printed Name)</small><br/>License No. _____</td>
+    <td style="width:34%; vertical-align:bottom; padding:4px 6px; font-size:9px; text-align:right;">DSWD Field Office 1, Gawad Kalinga, Luzon Avenue, Quezon City<br/>Tel.no. (02) 9292-5300<br/>Website: icdd.dswd.gov.ph | Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c5aca6a1a1eba1b6b2a185a2a8a4aca9eba6aaa8">[email&#160;protected]</a><br/>PAGE 8 of 8</td>
+  </tr></tbody></table>
+
+  <div class="footer-text">PAGE 3 of 4<br/>DSWD Field Office 1, Quezon Avenue, City of San Fernando, La Union, Philippines 2500<br/>Website: fo1.dswd.gov.ph &nbsp; Tel Nos.: (072)687-8000 &nbsp; Telefax: (072)888-2184</div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     PAGE 4 — CERTIFICATE OF ELIGIBILITY
+     ════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="header-flex">
+    <div class="logo-group">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Seal_of_the_Department_of_Social_Welfare_and_Development.svg/120px-Seal_of_the_Department_of_Social_Welfare_and_Development.svg.png" alt="DSWD Logo" />
+      <div><div><strong>DSWD</strong></div><div style="font-size:9px;">Department of Social Welfare and Development</div></div>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Social_Welfare_Seal_of_the_Philippines.svg/120px-Social_Welfare_Seal_of_the_Philippines.svg.png" alt="Social Welfare Logo" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Bayanihan_Pilipinas_seal.svg/120px-Bayanihan_Pilipinas_seal.svg.png" alt="Bayanihan Pilipinas" />
+    </div>
+    <div style="font-size:10px; border:1px solid black; padding:4px 8px; line-height:1.9;">
+      <div><input type="checkbox" /> <label># Central Office</label></div>
+      <div><input type="checkbox" /> <label># Field Office I</label></div>
+    </div>
+  </div>
+
+  <h3>CERTIFICATE OF ELIGIBILITY</h3>
+
+  <table style="margin-top:0;"><thead><tr><th style="width:12%;">QN</th><th style="width:58%;">PCN</th><th style="width:30%;">Date (MM / DD / YYYY)</th></tr></thead>
+  <tbody><tr>
+    <td><input type="text" style="width:100%; border:none; height:16px;" /></td>
+    <td><span class="pcn-box-coe">
+      <input type="text" maxlength="1"/><input type="text" maxlength="1"/><input type="text" maxlength="1"/><input type="text" maxlength="1"/>
+      <input type="text" maxlength="1"/><input type="text" maxlength="1"/><input type="text" maxlength="1"/><input type="text" maxlength="1"/>
+      <input type="text" maxlength="1"/><input type="text" maxlength="1"/><input type="text" maxlength="1"/><input type="text" maxlength="1"/>
+      <input type="text" maxlength="1"/><input type="text" maxlength="1"/><input type="text" maxlength="1"/><input type="text" maxlength="1"/>
+      <input type="text" maxlength="1"/><input type="text" maxlength="1"/><input type="text" maxlength="1"/><input type="text" maxlength="1"/>
+    </span></td>
+    <td style="text-align:center;"><input type="text" maxlength="2" style="width:26px; text-align:center;" /> / <input type="text" maxlength="2" style="width:26px; text-align:center;" /> / <input type="text" maxlength="4" value="2025" style="width:40px; text-align:center;" /></td>
+  </tr></tbody></table>
+
+  <table style="margin-top:3px;"><thead><tr><th>Program</th><th>Client Type</th><th>Mode</th><th>Source</th></tr></thead>
+  <tbody><tr>
+    <td><label class="cb-inline"><input type="checkbox" /> AICS</label><label class="cb-inline"><input type="checkbox" /> AKAP</label><label class="cb-inline"><input type="checkbox" /> Others</label></td>
+    <td><label class="cb-inline"><input type="radio" name="nr4" /> New</label><label class="cb-inline"><input type="radio" name="nr4" /> Returning</label></td>
+    <td><label class="cb-inline"><input type="checkbox" /> Onsite</label><label class="cb-inline"><input type="checkbox" /> Malasakit</label><label class="cb-inline"><input type="checkbox" /> Offsite</label></td>
+    <td><label class="cb-inline"><input type="radio" name="wr4" /> Walk-in</label><label class="cb-inline"><input type="radio" name="wr4" /> Referral</label></td>
+  </tr></tbody></table>
+
+  <div style="margin-top:5px;">
+    <div class="section-title">CERTIFICATION</div>
+    <table><tbody>
+      <tr><td style="font-size:10px; line-height:1.8;">This is to certify that <input type="text" class="ul-input" style="width:300px;" placeholder="First Name  Middle Name  Last Name  Extension Name" />, and presently residing at <input type="text" class="ul-input" style="width:270px;" placeholder="Complete Address" />.</td></tr>
+      <tr><td>
+        <table style="margin-top:0; border:none;"><tr>
+          <td style="border:none; padding:2px 4px 2px 0; width:50%;"><span style="font-size:10px;">Sex: </span><input type="text" class="ul-input" style="width:140px;" /></td>
+          <td style="border:none; padding:2px 0; width:50%;"><span style="font-size:10px;">Age: </span><input type="text" class="ul-input" style="width:140px;" /></td>
+        </tr><tr>
+          <td colspan="2" style="border:none; padding:2px 4px 2px 0;"><span style="font-size:10px;">Birthdate: </span><input type="text" style="width:30px; text-align:center;" maxlength="2" placeholder="MM" /> / <input type="text" style="width:30px; text-align:center;" maxlength="2" placeholder="DD" /> / <input type="text" style="width:44px; text-align:center;" maxlength="4" /></td>
+        </tr></table>
+      </td></tr>
+      <tr><td style="font-size:10px;">has been found eligible for assistance after the assessment and validation conducted, for him/herself or in representation of his/her family.</td></tr>
+    </tbody></table>
+  </div>
+
+  <div style="margin-top:4px;">
+    <div class="section-title">RECORDS OF THE CASE <span class="section-subtitle">(confidentially filed at the Crisis Intervention Program)</span></div>
+    <table><tbody><tr>
+      <td style="width:22%; vertical-align:top;"><label class="cb"><input type="checkbox" /> General Intake Sheet</label><label class="cb"><input type="checkbox" /> Justification</label><label class="cb"><input type="checkbox" /> Valid I.D. Presented</label></td>
+      <td style="width:30%; vertical-align:top;"><label class="cb"><input type="checkbox" /> Medical Certificate / Abstract</label><label class="cb"><input type="checkbox" /> Prescriptions</label><label class="cb"><input type="checkbox" /> Statement of Account</label><label class="cb"><input type="checkbox" /> Treatment Protocol</label><label class="cb"><input type="checkbox" /> Quotation/Charge Slip</label><label class="cb"><input type="checkbox" /> Discharge Summary</label><label class="cb"><input type="checkbox" /> Social Case Study Report</label><label class="cb"><input type="checkbox" /> Case Summary Report</label></td>
+      <td style="width:27%; vertical-align:top;"><label class="cb"><input type="checkbox" /> Laboratory Request</label><label class="cb"><input type="checkbox" /> Promissory Note / Cert. of Balance</label><label class="cb"><input type="checkbox" /> Funeral Contract</label><label class="cb"><input type="checkbox" /> Transfer Permit</label><label class="cb"><input type="checkbox" /> Death Certificate</label><label class="cb"><input type="checkbox" /> Death Summary</label><label class="cb"><input type="checkbox" /> Referral Letter</label></td>
+      <td style="width:21%; vertical-align:top;"><label class="cb"><input type="checkbox" /> Contract of Employment</label><label class="cb"><input type="checkbox" /> Certificate of Employment</label><label class="cb"><input type="checkbox" /> Certificate of Attestation</label><label class="cb"><input type="checkbox" /> Income Tax Return</label><label class="cb"><input type="checkbox" /> Others</label></td>
+    </tr></tbody></table>
+  </div>
+
+  <div class="box-container">
+    <div class="box">
+      <div class="box-title">IF OUTRIGHT CASH</div>
+      <p>The client is hereby recommended to receive <input type="text" class="ul-input" style="width:70px;" placeholder="FOOD" /> assistance for <input type="text" class="ul-input" style="width:120px;" placeholder="DAILY NEEDS" /> in the amount of <input type="text" class="ul-input" style="width:110px;" placeholder="THOUSAND PESOS" /></p>
+      <p>PhP <input type="text" style="width:90px; border:1px solid black; text-align:right;" placeholder=".000.00" /> <small>Amount in figures</small></p>
+    </div>
+    <div class="box">
+      <div class="box-title">IF GUARANTEE LETTER</div>
+      <p>GL No. <input type="text" class="ul-input" style="width:100px;" /></p>
+      <p>The client is hereby recommended to receive <input type="text" class="ul-input" style="width:80px;" /> assistance for <input type="text" class="ul-input" style="width:100px;" placeholder="THOUSAND PESOS" /> PhP <input type="text" style="width:70px; border:1px solid black; text-align:right;" placeholder=".000.00" /></p>
+      <p>payable to <input type="text" class="ul-input" style="width:170px;" /></p>
+      <p><input type="text" class="ul-input" style="width:220px;" placeholder="Name of Service Provider" /></p>
+      <p><input type="text" class="ul-input" style="width:220px;" placeholder="Address of Service Provider" /></p>
+    </div>
+  </div>
+
+  <div class="sig-section" style="margin-top:10px;">
+    <div class="sig-block"><div class="sig-line-bottom"></div><div>Social Worker</div><div style="font-size:9px; font-style:italic;">(Signature over Printed Name)</div><div style="font-size:9px; font-style:italic;">License Number: ___________</div></div>
+    <div class="sig-block"><div class="sig-line-bottom"></div><div>Approving Authority</div><div style="font-size:9px; font-style:italic;">(Signature over Printed Name)</div></div>
+  </div>
+
+  <div class="acknowledgment">ACKNOWLEDGMENT RECEIPT</div>
+
+  <table style="margin-top:3px;"><thead><tr><th style="width:40%; text-align:left;">Date (MM / DD / YYYY)</th><th style="text-align:left;">Amount Received</th></tr></thead>
+  <tbody><tr>
+    <td><input type="text" maxlength="2" style="width:28px; text-align:center;" placeholder="MM" /> / <input type="text" maxlength="2" style="width:28px; text-align:center;" placeholder="DD" /> / <input type="text" maxlength="4" style="width:42px; text-align:center;" value="2025" /></td>
+    <td style="font-size:10px;">I acknowledge receipt of assistance in the amount of <input type="text" class="ul-input" style="width:130px;" /> THOUSAND PESOS PhP <input type="text" style="width:80px; border:1px solid black; text-align:right;" placeholder=".000.00" /></td>
+  </tr></tbody></table>
+
+  <div class="sig-block-center" style="margin-top:18px;">
+    <div class="sig-line-bottom"></div>
+    <div>Client</div>
+    <div style="font-size:9px; font-style:italic;">(Signature over Printed Name)</div>
+  </div>
+
+  <div class="footer-text">PAGE 4 of 4<br/>DSWD Field Office 1, Quezon Avenue, City of San Fernando, La Union, Philippines 250

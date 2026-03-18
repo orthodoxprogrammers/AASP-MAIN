@@ -1,6 +1,6 @@
 <div class="sidebar bg-light vh-100 p-3">
 
-    <h4 class="mb-4">APSystem</h4>
+    <h4 class="mb-4">AAPSystem</h4>
 
     <?php
     $currentPage = basename($_SERVER['PHP_SELF']);

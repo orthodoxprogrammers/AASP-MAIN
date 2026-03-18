@@ -465,9 +465,12 @@ $row=$intake->fetch_assoc();
 
 <?php endwhile; ?>
 
-<div class="mt-4">
-<a href="barangay_households.php" class="btn btn-secondary">
-<i class="bi bi-arrow-left"></i> Back
+<div class="mt-4 d-flex gap-2">
+    <a href="barangay_households.php" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Back
+    </a>
+    <a href="print_beneficiary_barangay.php?id=<?= $id ?>" target="_blank" class="btn btn-primary">
+    <i class="bi bi-printer"></i> Print
 </a>
 </div>
 
