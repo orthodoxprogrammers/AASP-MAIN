@@ -171,17 +171,56 @@ background:#ffd6d6 !important;
 @media print{
 
 .controls{
-display:none;
+display:none !important;
 }
 
 @page{
 size: landscape;
+margin: 8mm;
 }
 
 body{
 margin:0;
 }
 
+td[contenteditable="true"]{
+background:white !important;
+}
+
+tr.selected-row{
+background:white !important;
+}
+
+}
+
+/* SIGNATURE BLOCK */
+
+.signature-block{
+display:flex;
+justify-content:space-between;
+margin-top:10px;
+padding:0 4px;
+}
+
+.sig-box{
+text-align:center;
+width:220px;
+}
+
+.sig-label{
+font-size:11px;
+font-family:Arial;
+margin-bottom:28px;
+text-align:left;
+}
+
+.sig-line{
+border-top:1px solid black;
+padding-top:3px;
+font-size:11px;
+font-family:Arial;
+font-weight:bold;
+text-align:center;
 }
 
 </style>
@@ -461,6 +500,20 @@ $sex=strtolower(trim($row['sex']));
 </tbody>
 
 </table>
+
+<div class="signature-block">
+
+  <div class="sig-box">
+    <div class="sig-label">Distributed by:</div>
+    <div class="sig-line">LDRRMO III</div>
+  </div>
+
+  <div class="sig-box">
+    <div class="sig-label">Requested by:</div>
+    <div class="sig-line">MSWDO</div>
+  </div>
+
+</div>
 
 </body>
 </html>

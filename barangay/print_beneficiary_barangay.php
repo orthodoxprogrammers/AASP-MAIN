@@ -954,9 +954,9 @@ if (isset($_GET['debug']) && $_GET['debug'] == '1') {
       <label class="cb-inline"><input type="radio" name="nr4" <?= $isReturn ? 'checked':'' ?> disabled /> Returning</label>
     </td>
     <td>
-      <label class="cb-inline"><input type="checkbox" <?= $visitType==='Onsite'           ? 'checked':'' ?> disabled /> Onsite</label>
-      <label class="cb-inline"><input type="checkbox" <?= $visitType==='Malasakit Center' ? 'checked':'' ?> disabled /> Malasakit</label>
-      <label class="cb-inline"><input type="checkbox" <?= $visitType==='Offsite'          ? 'checked':'' ?> disabled /> Offsite</label>
+      <label class="cb-inline"><input type="checkbox" <?= $isOnsite    ? 'checked':'' ?> disabled /> Onsite</label>
+      <label class="cb-inline"><input type="checkbox" <?= $isMalasakit ? 'checked':'' ?> disabled /> Malasakit</label>
+      <label class="cb-inline"><input type="checkbox" <?= $isOffsite   ? 'checked':'' ?> disabled /> Offsite</label>
     </td>
     <td>
       <label class="cb-inline"><input type="radio" name="wr4" <?= $source==='Walk-in'  ? 'checked':'' ?> disabled /> Walk-in</label>
